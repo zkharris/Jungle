@@ -12,6 +12,12 @@ def index():
 def post_pet():
     return dict()
 
+def sample():
+    return dict()
+
+def index2():
+    return dict()
+
 # ---- API (example) -----
 @auth.requires_login()
 def api_get_user_email():
@@ -30,7 +36,7 @@ def grid():
 # ---- Embedded wiki (example) ----
 def wiki():
     auth.wikimenu() # add the wiki to the menu
-    return auth.wiki() 
+    return auth.wiki()
 
 # ---- Action for login/register/etc (required for auth) -----
 def user():
