@@ -7,11 +7,13 @@ var app = function() {
     	console.log(self.vue.pet_name);
     	console.log(self.vue.pet_description);
     	console.log(self.vue.pet_type);
+        console.log(self.vue.image_url);
 
     	$.post(add_pet_url, {
     		pet_name: self.vue.pet_name,
     		pet_description: self.vue.pet_description,
-    		pet_type: self.vue.pet_type
+    		pet_type: self.vue.pet_type,
+            pet_image_url: self.vue.image_url
     	});
     }
 
@@ -23,9 +25,15 @@ var app = function() {
     		pet_name: "",
     		pet_description: "",
     		pet_type: "",
+            image_url: ""
     	},
     	methods: {
-    		submitButtonClicked: self.submitButtonClicked
+    		submitButtonClicked: self.submitButtonClicked,
+
+            onFileChange(e){
+                const file = e.target.files[0];
+                this.image_url = URL.createObjectURL(file);
+            }
     	}
     });
 
@@ -33,8 +41,6 @@ var app = function() {
 };
 
 var APP = null;
-
-
 
 // No, this would evaluate it too soon.
 // var APP = app();

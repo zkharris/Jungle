@@ -4,6 +4,8 @@ def add_pet():
 		petName = request.vars.pet_name,
 		petDescription = request.vars.pet_description,
 		petType = request.vars.pet_type,
-		petOwnerEmail = auth.user.email
+		petOwnerEmail = auth.user.email,
+		petImageURL = request.vars.pet_image_url
 	)
 	return "🐶"
+

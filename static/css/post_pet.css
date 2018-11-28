@@ -6,6 +6,23 @@
 
 .descriptionInputTextArea {
 	padding: 8px;
+	margin-top: 8px;
 	height: 100px;
 	width: 100%;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
+
+#pet_images {
+	padding 20px;
+	background-color: #e2e2e2;
 }

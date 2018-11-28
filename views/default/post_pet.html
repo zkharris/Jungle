@@ -23,12 +23,15 @@
 	<!-- Name -->
 	
 	<div class="pet name">
-		<input v-model="pet_name" placeholder="Name" class="nameInputTextArea"></	input>
+		<input v-model="pet_name" placeholder="Name" class="nameInputTextArea"/>
 	</div>
 	
 	<!-- Image uploading -->
-	<!-- TODO: Implement this -->
-	<div class="pet images">
+	<div id="pet_images">
+		<input type="file" @change="onFileChange($event)"/>
+		<div class="preview">
+			<img :src="image_url"/>
+		</div>
 	</div>
 	
 	<!-- Description -->
