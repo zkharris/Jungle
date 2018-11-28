@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 
 <html>
+<!-- preload all Google materials/icons,vueJS, vuetify, and vueCSS and favicon -->
 <head>
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png"/>
 </head>
+<!-- Where all the visuals start to come together-->
 <body>
   <div id="app">
     <v-toolbar dark tabs flat color="light green">
-      <v-toolbar-side-icon></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
       <a href="/" >
         <img src="../static/images/favicon.png" height="38px" width="38px">
       </a>
@@ -24,32 +27,29 @@
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn icon>
+        <!-- 3 vertical dots button --> 
         <v-icon>more_vert</v-icon>
       </v-btn>
-      <v-tabs
-        slot="extension"
-        v-model="tabs"
-        align-with-title
-        color="transparent"
-      >
-      <v-tab href="#one">Share</v-tab>
-      <v-tab href="#two">Edit</v-tab>
-      <v-tab href="#three">Scroll Up</v-tab>
-      <v-tabs-slider color="pink"></v-tabs-slider>
-    </v-tabs>
     </v-toolbar>
-    <v-tabs-items v-model="tabs">
-      <v-tab-item v-for="content in ['one', 'two', 'three']" :key="content" :value="content">
-        <v-card height="200px" flat>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
+    <!-- the bottom right create a new post button -->
+    <v-btn
+        href='/jungle/default/post_pet'
+        color="red"
+        dark
+        fab
+        fixed
+        bottom
+        right
+    >
+    <v-icon> edit <v-icon>
+    <!-- right below is if I want to create a cancel button -->
+    <!-- <v-icon> close <v-icon> -->
+  </v-btn>
   </div>
   <script>
     new Vue({
       el: '#app'
     })
   </script>
-
 </body>
 </html>
