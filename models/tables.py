@@ -14,7 +14,8 @@ db.define_table('pet',
                 Field('petDescription', default="No Description"),
                 Field('petType', 'text'),
                 Field('petOwnerEmail'),
-                Field('petImageURL', 'text')
+                Field('petImageURL', 'text'),
+                Field('petOwnerPhoneNumber')
                 )
 
 # Requests
@@ -24,5 +25,6 @@ db.define_table('requests',
 				Field('petOwnerEmail'),
 				Field('petRenterEmail')
 				)
+
 
 

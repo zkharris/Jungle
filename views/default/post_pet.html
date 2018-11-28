@@ -42,7 +42,7 @@
 	
 	<!-- Pet type -->
 	
-	<div class="pet type">
+	<div class="pet_type">
 		</h4>What kind of pet are they?</h4>
 		<select v-model="pet_type" class="petTypeSelector">
 			<option disabled value="">Please select a type listed or 'Other'</option>
@@ -54,6 +54,14 @@
 			<option>Other</option>
 		</select>
 		<span>
+	</div>
+
+	<!-- contact information -->
+
+
+	<div class="contact_info">
+		<h5>(Optional) Please enter your phone number for renters to contact you</h5>
+		<input v-model="pet_owner_phone_number" placeholder="(###)-###-####" class="phoneNumberInputTextArea"/>
 	</div>
 
 	<!-- Submit button -->

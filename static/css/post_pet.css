@@ -11,6 +11,11 @@
 	width: 100%;
 }
 
+.phoneNumberInputTextArea {
+	padding: 8px;
+	margin-bottom: 12px;
+}
+
 .preview {
   display: flex;
   justify-content: center;
@@ -25,4 +30,8 @@
 #pet_images {
 	padding 20px;
 	background-color: #e2e2e2;
+}
+
+.pet_type {
+	margin-bottom: 10px;
 }

@@ -13,7 +13,8 @@ var app = function() {
     		pet_name: self.vue.pet_name,
     		pet_description: self.vue.pet_description,
     		pet_type: self.vue.pet_type,
-            pet_image_url: self.vue.image_url
+            pet_image_url: self.vue.image_url,
+            pet_owner_phone_number: self.vue.pet_owner_phone_number
     	});
     }
 
@@ -25,7 +26,8 @@ var app = function() {
     		pet_name: "",
     		pet_description: "",
     		pet_type: "",
-            image_url: ""
+            image_url: "",
+            pet_owner_phone_number: ""
     	},
     	methods: {
     		submitButtonClicked: self.submitButtonClicked,
