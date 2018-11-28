@@ -1,0 +1,63 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+<!-- Vue -->
+
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+
+<!-- css -->
+
+<link href="{{=URL('static', 'css/post_pet.css')}}" rel="stylesheet" type="text/css" />
+
+
+<!-- api -->
+<script>
+	var add_pet_url = "{{=URL('api', 'add_pet', user_signature=True)}}";
+</script>
+
+{{end}}
+
+<h3>Tell us about your pet!</h3>
+
+<div id="post_pet_vue_div">
+	<!-- Name -->
+	
+	<div class="pet name">
+		<input v-model="pet_name" placeholder="Name" class="nameInputTextArea"></	input>
+	</div>
+	
+	<!-- Image uploading -->
+	<!-- TODO: Implement this -->
+	<div class="pet images">
+	</div>
+	
+	<!-- Description -->
+	
+	<div class="pet description">
+		<textarea v-model="pet_description" placeholder="Description" class="	descriptionInputTextArea"></textarea>
+	</div>
+	
+	<!-- Pet type -->
+	
+	<div class="pet type">
+		</h4>What kind of pet are they?</h4>
+		<select v-model="pet_type" class="petTypeSelector">
+			<option disabled value="">Please select a type listed or 'Other'</option>
+			<option>Dog</option>
+			<option>Cat</option>
+			<option>Reptile</option>
+			<option>Bird</option>
+			<option>Farm</option>
+			<option>Other</option>
+		</select>
+		<span>
+	</div>
+
+	<!-- Submit button -->
+	<div class="submit button">
+		<button v-on:click="submitButtonClicked();" class="submitButton">Submit</button>
+	</div>
+</div>
+
+<script src="{{=URL('static', 'js/post_pet.js')}}"></script>
+

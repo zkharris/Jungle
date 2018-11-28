@@ -1,0 +1,11 @@
+.nameInputTextArea {
+	padding: 8px;
+	margin-bottom: 12px;
+	width: 40%;
+}
+
+.descriptionInputTextArea {
+	padding: 8px;
+	height: 100px;
+	width: 100%;
+}
