@@ -7,7 +7,8 @@
 
 <!-- css -->
 
-<link href="{{=URL('static', 'css/post_pet.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/post_pet.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{=URL('static', 'css/stupid.css')}}" rel="stylesheet" type="text/css" />
 
 
 <!-- api -->
@@ -17,56 +18,64 @@
 
 {{end}}
 
-<h3>Tell us about your pet!</h3>
+
 
 <div id="post_pet_vue_div">
-	<!-- Name -->
-	
-	<div class="pet name">
-		<input v-model="pet_name" placeholder="Name" class="nameInputTextArea"/>
-	</div>
-	
-	<!-- Image uploading -->
-	<div id="pet_images">
-		<input type="file" @change="onFileChange($event)"/>
-		<div class="preview">
-			<img :src="image_url"/>
+	<div class="container">
+		<div class="twothirds">
+			<h3>Tell us about your pet!</h3>
+			
+			<!-- Name -->
+			
+			<div class="pet name">
+				<input v-model="pet_name" placeholder="Name" class="nameInputTextArea"/>
+			</div>
+			
+			<!-- Description -->
+			
+			<div class="pet description">
+				<textarea v-model="pet_description" placeholder="Description" class="			descriptionInputTextArea"></textarea>
+			</div>
+			
+			<!-- Pet type -->
+			
+			<div class="pet_type">
+				</h4>What kind of pet are they?</h4>
+				<select v-model="pet_type" class="petTypeSelector">
+					<option disabled value="">Please select a type listed or 'Other'</option>
+					<option>Dog</option>
+					<option>Cat</option>
+					<option>Reptile</option>
+					<option>Bird</option>
+					<option>Farm</option>
+					<option>Other</option>
+				</select>
+				<span>
+			</div>
+		
+			<!-- contact information -->
+		
+			<div class="contact_info">
+				<h5>(Optional) Please enter your phone number for renters to contact you</h5>
+				<input v-model="pet_owner_phone_number" placeholder="(###)-###-####" class="		phoneNumberInputTextArea"/>
+			</div>
+		
+			<!-- Submit button -->
+			<div class="submit_button">
+				<button v-on:click="submitButtonClicked();" class="submitButton">Submit</button>
+			</div>
 		</div>
-	</div>
-	
-	<!-- Description -->
-	
-	<div class="pet description">
-		<textarea v-model="pet_description" placeholder="Description" class="	descriptionInputTextArea"></textarea>
-	</div>
-	
-	<!-- Pet type -->
-	
-	<div class="pet_type">
-		</h4>What kind of pet are they?</h4>
-		<select v-model="pet_type" class="petTypeSelector">
-			<option disabled value="">Please select a type listed or 'Other'</option>
-			<option>Dog</option>
-			<option>Cat</option>
-			<option>Reptile</option>
-			<option>Bird</option>
-			<option>Farm</option>
-			<option>Other</option>
-		</select>
-		<span>
-	</div>
 
-	<!-- contact information -->
-
-
-	<div class="contact_info">
-		<h5>(Optional) Please enter your phone number for renters to contact you</h5>
-		<input v-model="pet_owner_phone_number" placeholder="(###)-###-####" class="phoneNumberInputTextArea"/>
-	</div>
-
-	<!-- Submit button -->
-	<div class="submit button">
-		<button v-on:click="submitButtonClicked();" class="submitButton">Submit</button>
+		<div class="third">
+			<!-- Image uploading -->
+			<h6> Upload an image </h6>
+			<div id="pet_images">
+				<input type="file" @change="onFileChange($event)"/>
+				<div class="preview">
+					<img :src="image_url"/>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
