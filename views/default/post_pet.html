@@ -14,11 +14,10 @@
 <!-- api -->
 <script>
 	var add_pet_url = "{{=URL('api', 'add_pet', user_signature=True)}}";
+	var upload_image_url = "{{=URL('uploader', 'get_upload_url')}}";
 </script>
 
 {{end}}
-
-
 
 <div id="post_pet_vue_div">
 	<div class="container">
@@ -70,7 +69,7 @@
 			<!-- Image uploading -->
 			<h6> Upload an image </h6>
 			<div id="pet_images">
-				<input type="file" @change="onFileChange($event)"/>
+				<input type="file" @change="onFileChange($event); change_image_url($event)"/>
 				<div class="preview">
 					<img :src="image_url"/>
 				</div>
