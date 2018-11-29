@@ -1,4 +1,8 @@
-.nameInputTextArea {
+.inline-block-child {
+  display: inline-block;
+}
+
+.titleInputTextArea {
 	padding: 8px;
 	margin-bottom: 12px;
 	width: 100%;

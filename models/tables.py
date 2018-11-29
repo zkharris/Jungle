@@ -10,12 +10,14 @@ def get_current_time():
 
 # TODO: store image(s) into this table
 db.define_table('pet',
-                Field('petName', 'text'),
-                Field('petDescription', default="No Description"),
-                Field('petType', 'text'),
-                Field('petOwnerEmail'),
-                Field('petImageURL', 'text'),
-                Field('petOwnerPhoneNumber')
+                Field('pet_title', 'text'),
+                Field('pet_description', default="No Description"),
+                Field('pet_type', 'text'),
+                Field('pet_owner_email'),
+                Field('pet_image_URL', 'text'),
+                Field('pet_owner_phone_number'),
+                Field('pet_price'),
+                Field('pet_date', default=get_current_time())
                 )
 
 # Requests

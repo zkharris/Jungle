@@ -14,20 +14,20 @@
 <!-- api -->
 <script>
 	var add_pet_url = "{{=URL('api', 'add_pet', user_signature=True)}}";
-	var upload_image_url = "{{=URL('uploader', 'get_upload_url')}}";
+	// var upload_image_url = "{{=URL('uploader', 'get_upload_url')}}";
 </script>
 
 {{end}}
 
 <div id="post_pet_vue_div">
 	<div class="container">
-		<div class="twothirds">
+		<div class="half">
 			<h3>Tell us about your pet!</h3>
 			
-			<!-- Name -->
+			<!-- Title -->
 			
-			<div class="pet name">
-				<input v-model="pet_name" placeholder="Name" class="nameInputTextArea"/>
+			<div class="pet_title">
+				<input v-model="pet_title" placeholder="Title" class="titleInputTextArea"/>
 			</div>
 			
 			<!-- Description -->
@@ -39,8 +39,8 @@
 			<!-- Pet type -->
 			
 			<div class="pet_type">
-				</h4>What kind of pet are they?</h4>
-				<select v-model="pet_type" class="petTypeSelector">
+				<div class="child inline-block-child"></h4>What kind of pet are they?</h4></div>
+				<div class="child inline-block-child"><select v-model="pet_type" class="petTypeSelector">
 					<option disabled value="">Please select a type listed or 'Other'</option>
 					<option>Dog</option>
 					<option>Cat</option>
@@ -48,15 +48,23 @@
 					<option>Bird</option>
 					<option>Farm</option>
 					<option>Other</option>
-				</select>
+				</select></div>
 				<span>
 			</div>
+
+			<!-- price -->
+
+			<div class="pet_price_input">
+				<div class="child inline-block-child"><p>Price</p></div>
+				<div class="child inline-block-child"><input v-model="pet_price" class="pet_price_input_text_area"></input></div>
+			</div>
+
 		
 			<!-- contact information -->
 		
 			<div class="contact_info">
-				<h5>(Optional) Please enter your phone number for renters to contact you</h5>
-				<input v-model="pet_owner_phone_number" placeholder="(###)-###-####" class="		phoneNumberInputTextArea"/>
+				<div class="child inline-block-child"><p>Please enter phone number if you would prefer to be contacted by phone</p></div>
+				<div class="child inline-block-child"><input v-model="pet_owner_phone_number" placeholder="(###)-###-####" class="phoneNumberInputTextArea"/></div>
 			</div>
 		
 			<!-- Submit button -->
@@ -65,11 +73,11 @@
 			</div>
 		</div>
 
-		<div class="third">
+		<div class="half">
 			<!-- Image uploading -->
 			<h6> Upload an image </h6>
 			<div id="pet_images">
-				<input type="file" @change="onFileChange($event); change_image_url($event)"/>
+				<input type="file" accept="image/*" @change="onFileChange($event); change_image_url($event)"/>
 				<div class="preview">
 					<img :src="image_url"/>
 				</div>

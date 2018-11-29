@@ -4,7 +4,7 @@ var app = function() {
 
     self.submitButtonClicked = function () {
     	console.log("submit button clicked on post pet screen");
-    	console.log(self.vue.pet_name);
+    	console.log(self.vue.pet_title);
     	console.log(self.vue.pet_description);
     	console.log(self.vue.pet_type);
         console.log(self.vue.image_url);
@@ -12,11 +12,12 @@ var app = function() {
         self.upload_file();
 
     	$.post(add_pet_url, {
-    		pet_name: self.vue.pet_name,
+    		pet_title: self.vue.pet_title,
     		pet_description: self.vue.pet_description,
     		pet_type: self.vue.pet_type,
             pet_owner_phone_number: self.vue.pet_owner_phone_number,
-            pet_image_url: self.vue.image_get_url 
+            pet_image_url: self.vue.image_get_url ,
+            pet_price: self.vue.pet_price
     	});
 
     }
@@ -48,7 +49,7 @@ var app = function() {
             // Now we should take care of the upload.
             // Gets an upload URL.
             console.log("Trying to get the upload url");
-            $.getJSON(upload_image_url,
+            $.getJSON('https://upload-dot-luca-teaching.appspot.com/start/uploader/get_upload_url',
                 function (data) {
                     // We now have upload (and download) URLs.
                     // The PUT url is used to upload the image.
@@ -92,9 +93,10 @@ var app = function() {
     	delimiters: ['${', '}'],
     	unsafeDelimiters: ['!{', '}'],
     	data: {
-    		pet_name: "",
+    		pet_title: "",
     		pet_description: "",
     		pet_type: "",
+            pet_price: "",
             image_url: "",
             image_file: null,
             image_get_url: null,
