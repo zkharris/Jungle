@@ -31,6 +31,62 @@
         <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
+
+
+    <!-- MARK: Main feed -->
+
+
+    <!-- The for loop in pet_list will be our Ceiling(pet_list.length) -->
+    <!-- TODO: css and populate with our data -->
+    <v-layout>
+      <v-container grid-list-md>
+        <div class="pet_list" v-for="i in 7">
+        <v-layout row>
+        <v-flex v-for="i in 3" :key="`4${i}`" lg4>
+          <v-card>
+            <v-img
+              class="white--text"
+              height="200px"
+              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            >
+              <v-container fill-height fluid>
+                <v-layout fill-height>
+                  <v-flex xs12 align-end flexbox>
+                    <span class="headline">Top 10 Australian beaches</span>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-img>
+            <v-card-title>
+              <div>
+                <span class="grey--text">Number 10</span><br>
+                <span>Whitehaven Beach</span><br>
+                <span>Whitsunday Island, Whitsunday Islands</span>
+              </div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat color="orange">Share</v-btn>
+              <v-btn flat color="orange">Explore</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </div>
+    </v-container>
+  </v-layout>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- the bottom right create a new post button -->
     <v-btn
         href='/jungle/default/post_pet'
