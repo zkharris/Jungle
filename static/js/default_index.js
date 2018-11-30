@@ -11,6 +11,7 @@ var vue = new Vue({
     el: "#app",
     data: {
         pet_list: [],
+        pet_list_length: 0,
         pet_grid_rows: 0,
         show_feed: false
     },
@@ -40,6 +41,11 @@ var vue = new Vue({
 
     function process_pets() {
         enumerate(vue.pet_list);
+
+
+        vue.pet_list_length = vue.pet_list.length;
+
+        vue.pet_grid_rows = Math.ceil(vue.pet_list_length / 3);
 
         for(var i = 0; i < vue.pet_list.length; i++){
             console.log(vue.pet_list[i].pet_title);

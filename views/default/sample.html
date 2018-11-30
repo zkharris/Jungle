@@ -46,23 +46,32 @@
     <!-- MARK: Main feed -->
     <!-- TODO: css -->
     <div v-show="show_feed" id="pet_list">
-      <div class="pet_list" v-for="pet in pet_list">
-        <v-card>
-            <v-img
-              class="white--text"
-              width="400px"
-              height="400px"
-              v-bind:src="pet.pet_image_url"
-            >
-            </v-img>
-            <v-card-title>
-              <div>
-                <div class="pet_date" v-bind:text-content.prop="pet.pet_date"></div>
-                <div class="pet_title" v-bind:text-content.prop="pet.pet_title"></div>
-                <div class="pet_price" v-bind:text-content.prop="pet.pet_price">$</div>
-              </div>
-            </v-card-title>
-          </v-card>
+      <div class="pet_list" v-for="i in pet_grid_rows">
+        <template>
+        <v-container grid-list-xl>
+          <v-layout row>
+            <v-flex v-for="j in 3" :key="`4${j}`">
+                <v-card>
+                  <v-img
+                    class="white--text"
+                    width="300px"
+                    height="300px"
+                    v-bind:src="pet_list[(i-1) * 3 + (j-1)].pet_image_url"
+                  >
+                  </v-img>
+                  <v-card-title>
+                    <div>
+                    <div>
+                      <div class="pet_date" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
+                      <div class="pet_title" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
+                      <div class="pet_price" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
+                    </div>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+            </v-layout>
+        </v-container>
+      </template>
       </div>
     </div>
 
