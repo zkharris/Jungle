@@ -5,11 +5,21 @@
 <head>
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
   <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"> -->
   <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png"/>
+
+  <!-- api -->
+<script>
+  var get_pet_list_url = "{{=URL('api', 'get_pets_list')}}";
+</script>
+
 </head>
+
 <!-- Where all the visuals start to come together-->
 <body>
   <div id="app">
@@ -34,57 +44,27 @@
 
 
     <!-- MARK: Main feed -->
-
-
-    <!-- The for loop in pet_list will be our Ceiling(pet_list.length) -->
-    <!-- TODO: css and populate with our data -->
-    <v-layout>
-      <v-container grid-list-md>
-        <div class="pet_list" v-for="i in 7">
-        <v-layout row>
-        <v-flex v-for="i in 3" :key="`4${i}`" lg4>
-          <v-card>
+    <!-- TODO: css -->
+    <div v-show="show_feed" id="pet_list">
+      <div class="pet_list" v-for="pet in pet_list">
+        <v-card>
             <v-img
               class="white--text"
-              height="200px"
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+              width="400px"
+              height="400px"
+              v-bind:src="pet.pet_image_url"
             >
-              <v-container fill-height fluid>
-                <v-layout fill-height>
-                  <v-flex xs12 align-end flexbox>
-                    <span class="headline">Top 10 Australian beaches</span>
-                  </v-flex>
-                </v-layout>
-              </v-container>
             </v-img>
             <v-card-title>
               <div>
-                <span class="grey--text">Number 10</span><br>
-                <span>Whitehaven Beach</span><br>
-                <span>Whitsunday Island, Whitsunday Islands</span>
+                <div class="pet_date" v-bind:text-content.prop="pet.pet_date"></div>
+                <div class="pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+                <div class="pet_price" v-bind:text-content.prop="pet.pet_price">$</div>
               </div>
             </v-card-title>
-            <v-card-actions>
-              <v-btn flat color="orange">Share</v-btn>
-              <v-btn flat color="orange">Explore</v-btn>
-            </v-card-actions>
           </v-card>
-        </v-flex>
-      </v-layout>
+      </div>
     </div>
-    </v-container>
-  </v-layout>
-
-
-
-
-
-
-
-
-
-
-
 
 
     <!-- the bottom right create a new post button -->
@@ -102,10 +82,9 @@
     <!-- <v-icon> close <v-icon> -->
   </v-btn>
   </div>
-  <script>
-    new Vue({
-      el: '#app'
-    })
-  </script>
+  <script src="{{=URL('static', 'js/default_index.js')}}"></script>
 </body>
+
+
+
 </html>

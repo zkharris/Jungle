@@ -14,17 +14,17 @@ def add_pet():
 def get_pets_list():
 	results = []
 
-	rows = db.select(db.pets.ALL)
+	rows = db().select(db.pet.ALL, orderby=~db.pet.pet_date)
 
 	for row in rows:
 		results.append(dict(
-			id=row.pets.id,
-			pet_name=row.pets.pet_title,
-			pet_description=row.pets.pet_description,
-			pet_type=row.pets.pet_type,
-			pet_image_url=row.pets.pet_image_URL,
-			pet_price=row.pets.pet_price,
-			pet_date=row.pets.pet_date
+			id=row.id,
+			pet_title=row.pet_title,
+			pet_description=row.pet_description,
+			pet_type=row.pet_type,
+			pet_image_url=row.pet_image_URL,
+			pet_price=row.pet_price,
+			pet_date=row.pet_date
 		))
 
 	return response.json(dict(pet_list=results))
