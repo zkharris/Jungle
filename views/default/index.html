@@ -1,51 +1,198 @@
-{{extend 'layout.html'}}
+<!DOCTYPE html>
 
-{{block header}}
-<div class="jumbotron jumbotron-fluid background" style="background-color: #333; color:white; padding:30px;word-wrap:break-word;">
-  <div class="container center">
-    <h1 class="display-5">/{{=request.application}}/{{=request.controller}}/{{=request.function}}</h1>
-  </div>
-</div>
-{{end}}
+<html>
+<!-- preload all Google materials/icons,vueJS, vuetify, and vueCSS and favicon -->
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 
-<div class="row">
-  <div class="col-md-12">
-    {{if 'message' in globals():}}
-    <h2>{{=message}}</h2>
-    <p class="lead">{{=T('How did you get here?')}}</p>
-    <ol style="word-wrap:break-word;">
-      <li>{{=T('You are successfully running web2py')}}</li>
-      <li>{{=XML(T('You visited the url %s', A(request.env.path_info,_href=request.env.path_info)))}}</li>
-      <li>{{=XML(T('Which called the function %s located in the file %s',
-        (A(request.function+'()',_href='#'),
-        A('web2py/applications/%(application)s/controllers/%(controller)s.py' % request,
-        _href=URL('admin','default','peek', args=(request.application,'controllers',request.controller+'.py'))))))}}</li>
-      <li>{{=XML(T('The output of the file is a dictionary that was rendered by the view %s',
-        A('web2py/applications/%(application)s/views/%(controller)s/index.html' % request,
-        _href=URL('admin','default','peek',args=(request.application,'views',request.controller,'index.html')))))}}</li>
-      <li>{{=T('You can modify this application and adapt it to your needs')}}</li>
-    </ol>
-    <div class="jumbotron jumbotron-fluid" style="padding:30px;word-wrap:break-word;">
-      <div class="container center">
-        <a class="btn btn-primary" href="{{=URL('admin','default','index')}}">
-          <i class="fa fa-cog"></i>
-          {{=T("admin")}}
-        </a>
-        <a class="btn btn-secondary" href="{{=URL('examples','default','index')}}">{{=T("Online examples")}}</a>
-        <a class="btn btn-secondary" href="http://web2py.com">web2py.com</a>
-        <a class="btn btn-secondary" href="http://web2py.com/book">{{=T('Documentation')}}</a>
-        <a class="btn btn-secondary" href="{{=URL('default','api_get_user_email')}}">{{=T('API Example')}}</a>
-        <a class="btn btn-secondary" href="{{=URL('default','grid/auth_user')}}">{{=T('Grid Example')}}</a>
-        <a class="btn btn-secondary" href="{{=URL('default','wiki')}}">{{=T('Wiki Example')}}</a>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"> -->
+  <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png"/>
+
+
+  <!-- css -->
+  <link href="{{=URL('static', 'css/post_pet.css')}}" rel="stylesheet" type="text/css"/>
+  <link href="{{=URL('static', 'css/stupid.css')}}" rel="stylesheet" type="text/css" />
+
+
+
+  <!-- api -->
+
+<script>
+  var get_pet_list_url = "{{=URL('api', 'get_pets_list')}}";
+  var add_pet_url = "{{=URL('api', 'add_pet', user_signature=True)}}";
+
+</script>
+
+</head>
+
+<body>
+
+
+<!-- MARK: Main Page -->
+
+
+<div id="app">
+  <div v-show="on_main_page" id="main_page">
+    <v-toolbar dark tabs flat color="light green">
+      <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
+      <a href="/" >
+        <img src="../static/images/favicon.png" height="38px" width="38px">
+      </a>
+      <v-toolbar-title>The Jungle</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+      hide-details
+      prepend-icon="search"
+      single-line
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn icon href="/jungle/default/user">
+        <!-- 3 vertical dots button --> 
+        <v-icon>more_vert</v-icon>
+      </v-btn>
+    </v-toolbar>
+
+
+    <!-- MARK: Main feed -->
+    <!-- TODO: css -->
+    <div v-show="show_feed" id="pet_list">
+      <div class="pet_list" v-for="i in pet_grid_rows">
+        <template>
+        <v-container grid-list-md>
+          <v-layout row>
+            <v-flex v-for="j in 3" :key="`4${j}`">
+                <v-card v-if="pet_list[(i-1) * 3 + (j-1)] !== undefined">
+                  <v-img 
+                    class="white--text"
+                    width="300px"
+                    height="300px"
+                    v-bind:src="pet_list[(i-1) * 3 + (j-1)].pet_image_url"
+                  >
+                  </v-img>
+                  <v-card-title>
+                    <div>
+                    <div>
+                      <div class="pet_date" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
+                      <div class="pet_title" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
+                      <div class="pet_price" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
+                    </div>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+            </v-layout>
+        </v-container>
+      </template>
       </div>
     </div>
-    {{elif 'content' in globals():}}
-    {{=content}}
-    {{else:}}
-    {{=BEAUTIFY(response._vars)}}
-    {{pass}}
+
+
+    <!-- the bottom right create a new post button -->
+    <v-btn
+        v-on:click="post_pet_page();"
+        color="red"
+        dark
+        fab
+        fixed
+        bottom
+        right
+    >
+    <v-icon> edit <v-icon>
+    <!-- right below is if I want to create a cancel button -->
+    <!-- <v-icon> close <v-icon> -->
+  </v-btn>
   </div>
+
+
+
+
+
+
+  <!-- MARK: Post Pet Page -->
+
+
+  <div v-if="on_post_pet_page">
+ 
+  <div class="cancel_button">
+    <button id="cancel" v-on:click="main_page();">Cancel</button>
+  </div>
+  
+  <div class="container">
+    <div class="half">
+      
+      
+      <!-- Title -->
+      <h6>Title of post</h6>
+      <div class="pet_title">
+        <input v-model="post_pet.pet_title" placeholder="Title" class="titleInputTextArea"/>
+      </div>
+      
+      <!-- Description -->
+
+      <h6>Tell us about your pet!</h6>
+      <div class="pet description">
+        <textarea v-model="post_pet.pet_description" placeholder="Description" class="     descriptionInputTextArea"></textarea>
+      </div>
+      
+      <!-- Pet type -->
+      
+      <div class="pet_type">
+        <div class="child inline-block-child"></h4>What kind of pet are they?</h4></div>
+        <div class="child inline-block-child"><select v-model="post_pet.pet_type" class="petTypeSelector">
+          <option disabled value="">Please select a type listed or 'Other'</option>
+          <option>Dog</option>
+          <option>Cat</option>
+          <option>Reptile</option>
+          <option>Bird</option>
+          <option>Farm</option>
+          <option>Other</option>
+        </select></div>
+        <span>
+      </div>
+
+      <!-- price -->
+
+      <div class="pet_price_input">
+        <div class="child inline-block-child"><p>Price</p></div>
+        <div class="child inline-block-child"><input v-model="post_pet.pet_price" class="pet_price_input_text_area"></input></div>
+      </div>
+
+    
+      <!-- contact information -->
+    
+      <div class="contact_info">
+        <div class="child inline-block-child"><p>Please enter phone number if you would prefer to be contacted by phone</p></div>
+        <div class="child inline-block-child"><input v-model="post_pet.pet_owner_phone_number" placeholder="(###)-###-####" class="phoneNumberInputTextArea"/></div>
+      </div>
+    
+      <!-- Submit button -->
+      <div class="submit_button">
+        <button v-on:click="submit_button_clicked();" class="submitButton">Submit</button>
+      </div>
+    </div>
+
+    <div class="half">
+      <!-- Image uploading -->
+      <h6> Upload an image </h6>
+      <div id="pet_images">
+        <input type="file" accept="image/*" @change="onFileChange($event); change_image_url($event)"/>
+        <div class="preview">
+          <img :src="post_pet.image_url"/>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
 </div>
 
 
+</body>
 
+  <script src="{{=URL('static', 'js/default_index.js')}}"></script>
+
+</html>
