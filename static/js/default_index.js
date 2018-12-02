@@ -29,7 +29,14 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
                 pet_owner_phone_number: ""
             },
             pet: {
-                pet_idx: null
+                pet_idx: null,
+                pet_title: "",
+                pet_description: "",
+                pet_type: "",
+                pet_price: "",
+                image_url: null,
+                pet_owner_email: "",
+                pet_owner_phone_number: "",
             }
         },
         methods: {
@@ -216,9 +223,24 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
 
 
     // MARK: Pet page
-    function get_pet_data(pet_idx) {
-        if (pet_idx != null) {
-            console.log("💩" + pet_idx);
+
+    function get_pet_data(pet_id) {
+        if (pet_id != null) {
+            $.getJSON(get_pet_data_url, {
+                pet_id: pet_id,
+            }, function(data) {
+                app.pet.pet_title = data.pet.pet_title;
+                app.pet.pet_description = data.pet.pet_description;
+                app.pet.pet_type = data.pet.pet_type;
+                app.pet.pet_image_url = data.pet.pet_image_url;
+                app.pet.pet_price = data.pet.pet_price;
+                app.pet.pet_date = data.pet.pet_date;
+                app.pet.pet_owner_phone_number = data.pet.pet_owner_phone_number;
+                app.pet.pet_owner_email = data.pet.pet_owner_email;
+                console.log(app.pet.pet_image_url);
+            }
+        );
+        console.log("I fired the get");
         }
     }
 
@@ -241,12 +263,6 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
         app.post_pet.image_file = "";
         app.post_pet.pet_owner_phone_number = "";
     }
-
-
-
-
-
-
 
 
 

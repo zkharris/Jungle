@@ -16,7 +16,7 @@
 
   <!-- css -->
   <link href="{{=URL('static', 'css/post_pet.css')}}" rel="stylesheet" type="text/css"/>
-  <link href="{{=URL('static', 'css/stupid.css')}}" rel="stylesheet" type="text/css" />
+  <!-- <link href="{{=URL('static', 'css/stupid.css')}}" rel="stylesheet" type="text/css" /> -->
 
 
 
@@ -25,6 +25,7 @@
 <script>
   var get_pet_list_url = "{{=URL('api', 'get_pets_list')}}";
   var add_pet_url = "{{=URL('api', 'add_pet', user_signature=True)}}";
+  var get_pet_data_url = "{{=URL('api', 'get_pet_data')}}";
 
 </script>
 
@@ -60,10 +61,11 @@
 
     <!-- MARK: Main feed -->
     <!-- TODO: css -->
+
     <div v-show="main.show_feed" id="pet_list">
       <div class="main.pet_list" v-for="i in main.pet_grid_rows">
         <template>
-        <v-container grid-list-md>
+        <v-container grid-list-md> 
           <v-layout row>
             <v-flex v-for="j in 3" :key="`4${j}`">
                 <v-card v-if="main.pet_list[(i-1) * 3 + (j-1)] !== undefined"
@@ -78,9 +80,9 @@
                   <v-card-title>
                     <div>
                     <div>
-                      <div class="pet_date" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
-                      <div class="pet_title" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
-                      <div class="pet_price" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
+                      <div class="main_pet_date" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
+                      <div class="main_pet_title" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
+                      <div class="main_pet_price" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
                     </div>
                   </v-card-title>
                 </v-card>
@@ -109,12 +111,8 @@
   </div>
 
 
-
-
-
-
   <!-- MARK: Post Pet Page -->
-
+  <!-- TODO: css -->
 
   <div v-if="on_post_pet_page">
  
@@ -128,20 +126,20 @@
       
       <!-- Title -->
       <h6>Title of post</h6>
-      <div class="pet_title">
+      <div class="post_pet_title">
         <input v-model="post_pet.pet_title" placeholder="Title" class="titleInputTextArea"/>
       </div>
       
       <!-- Description -->
 
       <h6>Tell us about your pet!</h6>
-      <div class="pet description">
+      <div class="post_pet description">
         <textarea v-model="post_pet.pet_description" placeholder="Description" class="     descriptionInputTextArea"></textarea>
       </div>
       
       <!-- Pet type -->
       
-      <div class="pet_type">
+      <div class="post_pet_type">
         <div class="child inline-block-child"></h4>What kind of pet are they?</h4></div>
         <div class="child inline-block-child"><select v-model="post_pet.pet_type" class="petTypeSelector">
           <option disabled value="">Please select a type listed or 'Other'</option>
@@ -157,7 +155,7 @@
 
       <!-- price -->
 
-      <div class="pet_price_input">
+      <div class="post_pet_price_input">
         <div class="child inline-block-child"><p>Price</p></div>
         <div class="child inline-block-child"><input v-model="post_pet.pet_price" class="pet_price_input_text_area"></input></div>
       </div>
@@ -165,7 +163,7 @@
     
       <!-- contact information -->
     
-      <div class="contact_info">
+      <div class="post_contact_info">
         <div class="child inline-block-child"><p>Please enter phone number if you would prefer to be contacted by phone</p></div>
         <div class="child inline-block-child"><input v-model="post_pet.pet_owner_phone_number" placeholder="(###)-###-####" class="phoneNumberInputTextArea"/></div>
       </div>
@@ -191,14 +189,41 @@
 
 
   <!-- MARK: Pet page -->
+  <!-- TODO: css, everything -->
 
 
   <div v-if="on_pet_page" class="pet_page">
     <div class="back button">
       <button v-on:click="back_button_clicked();" class="backButton">Back</button>
     </div>
-    <p>Pet page</p>
+    
+    
+    <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+    
+
+    <div class="single_pet_image">
+      <div class="preview">
+        <img :src="pet.pet_image_url"/>
+      </div>
+    </div>
+
+
+    <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
+
+    <div class="single_pet_type" v-bind:text-content.prop="pet.pet_type"></div>
+
+    <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
+
+    <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date"></div>
+
+    <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+
+    <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_email"></div>
+
+
+
   </div>
+
 
 
 
