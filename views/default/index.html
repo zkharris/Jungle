@@ -60,26 +60,27 @@
 
     <!-- MARK: Main feed -->
     <!-- TODO: css -->
-    <div v-show="show_feed" id="pet_list">
-      <div class="pet_list" v-for="i in pet_grid_rows">
+    <div v-show="main.show_feed" id="pet_list">
+      <div class="main.pet_list" v-for="i in main.pet_grid_rows">
         <template>
         <v-container grid-list-md>
           <v-layout row>
             <v-flex v-for="j in 3" :key="`4${j}`">
-                <v-card v-if="pet_list[(i-1) * 3 + (j-1)] !== undefined">
+                <v-card v-if="main.pet_list[(i-1) * 3 + (j-1)] !== undefined"
+                v-on:click="pet_page(main.pet_list[(i-1) * 3 + (j-1)].id)">
                   <v-img 
                     class="white--text"
                     width="300px"
                     height="300px"
-                    v-bind:src="pet_list[(i-1) * 3 + (j-1)].pet_image_url"
+                    v-bind:src="main.pet_list[(i-1) * 3 + (j-1)].pet_image_url"
                   >
                   </v-img>
                   <v-card-title>
                     <div>
                     <div>
-                      <div class="pet_date" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
-                      <div class="pet_title" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
-                      <div class="pet_price" v-bind:text-content.prop="pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
+                      <div class="pet_date" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
+                      <div class="pet_title" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
+                      <div class="pet_price" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
                     </div>
                   </v-card-title>
                 </v-card>
@@ -118,7 +119,7 @@
   <div v-if="on_post_pet_page">
  
   <div class="cancel_button">
-    <button id="cancel" v-on:click="main_page();">Cancel</button>
+    <button id="cancel" v-on:click="cancel_button_clicked();">Cancel</button>
   </div>
   
   <div class="container">
@@ -187,6 +188,20 @@
     </div>
     </div>
   </div>
+
+
+  <!-- MARK: Pet page -->
+
+
+  <div v-if="on_pet_page" class="pet_page">
+    <div class="back button">
+      <button v-on:click="back_button_clicked();" class="backButton">Back</button>
+    </div>
+    <p>Pet page</p>
+  </div>
+
+
+
 
 </div>
 

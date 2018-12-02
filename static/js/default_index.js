@@ -7,19 +7,18 @@ function extend(a, b) {
 // Enumerates an array.
 var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;});};
 
-
-
-
     var app = new Vue({
         el: "#app",
         data: {
             on_main_page: true,
             on_post_pet_page: false,
-            on_request_pet_page: false,
-            pet_list: [],
-            pet_list_length: 0,
-            pet_grid_rows: 0,
-            show_feed: false,
+            on_pet_page: false,
+            main: {
+                pet_list: [],
+                pet_list_length: 0,
+                pet_grid_rows: 0,
+                show_feed: false
+            },
             post_pet: {
                 pet_title: "",
                 pet_description: "",
@@ -27,45 +26,65 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
                 pet_price: "",
                 image_url: "",
                 image_file: null,
-                image_get_url: null,
                 pet_owner_phone_number: ""
+            },
+            pet: {
+                pet_idx: null
             }
         },
         methods: {
+            
             // navigation
-            post_pet_page: post_pet_page,
+
             main_page: main_page,
+            post_pet_page: post_pet_page,
+            pet_page: pet_page,
 
 
-            // post pet
+            // post pet page
+
             onFileChange(e){
                 const file = e.target.files[0];
                 app.post_pet.image_url = URL.createObjectURL(file);
                 console.log(app.post_pet.image_url + "🤷‍♀️");
             },
             change_image_url: change_image_url,
-            submit_button_clicked: submit_button_clicked
+            submit_button_clicked: submit_button_clicked,
+            cancel_button_clicked: cancel_button_clicked,
+
+            // pet page
+            back_button_clicked: back_button_clicked,
         }
     });
 
 
 
-    // Navigation
-
-
-    function post_pet_page() {
-        app.on_main_page = false;
-        app.on_post_pet_page = true;
-    }
+    // MARK: Navigation
 
     function main_page() {
         get_pets();
         app.on_main_page = true;
         app.on_post_pet_page = false;
+        app.on_pet_page = false;
+    }
+
+    function post_pet_page() {
+        app.on_main_page = false;
+        app.on_post_pet_page = true;
+        app.on_pet_page = false;
+    }
+
+    function pet_page(pet_idx) {
+        app.on_main_page = false;
+        app.on_post_pet_page = false;
+        app.on_pet_page = true;
+        app.pet.pet_idx = pet_idx;
+
+        get_pet_data(app.pet.pet_idx);
     }
 
 
-    // Main page
+    // MARK: Main page
 
 
     function get_pets() {
@@ -73,7 +92,7 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
             function(data) {
                 // I am assuming here that the server gives me a nice list
                 // of posts, all ready for display.
-                app.pet_list = data.pet_list;
+                app.main.pet_list = data.pet_list;
                 // this.pet_list = data.pet_list;
                 // Post-processing.
                 process_pets();
@@ -84,29 +103,25 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
     }
 
     function process_pets() {
-        enumerate(app.pet_list);
+        enumerate(app.main.pet_list);
 
-        app.pet_list_length = app.pet_list.length;
+        app.main.pet_list_length = app.main.pet_list.length;
 
-        app.pet_grid_rows = Math.ceil(app.pet_list_length / 3);
-        console.log(app.pet_grid_rows + "😃");
+        app.main.pet_grid_rows = Math.ceil(app.main.pet_list_length / 3);
+        console.log(app.main.pet_grid_rows + "😃");
 
-        for(var i = 0; i < app.pet_list.length; i++){
-            console.log(app.pet_list[i].pet_title);
-        }
-
-        app.pet_list.map(function (e) {
+        app.main.pet_list.map(function (e) {
             Vue.set(e, 'pet_image_url', e.pet_image_url);
             Vue.set(e, 'pet_title', e.pet_title);
             Vue.set(e, 'pet_date', e.pet_date);
             Vue.set(e, 'pet_price', e.pet_price);
         });
 
-        app.show_feed = true;
+        app.main.show_feed = true;
     }
 
     
-    // Post pet
+    // MAR: Post pet page
 
 
     function submit_button_clicked() {
@@ -123,13 +138,18 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
             pet_description: app.post_pet.pet_description,
             pet_type: app.post_pet.pet_type,
             pet_owner_phone_number: app.post_pet.pet_owner_phone_number,
-            pet_image_url: app.post_pet.image_get_url ,
+            pet_image_url: app.post_pet.image_url ,
             pet_price: app.post_pet.pet_price
         }, function() {
             main_page();
         });
 
+        clear_form_data();
+    }
 
+    function cancel_button_clicked() {
+        clear_form_data();
+        main_page();
     }
 
     function upload_file() {
@@ -184,7 +204,7 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
 
     function upload_complete(get_url) {
         console.log('The file was uploaded; it is now available at ' + get_url);
-        app.post_pet.image_get_url = get_url;
+        app.post_pet.image_url = get_url;
     }
 
     function change_image_url(event) {
@@ -192,6 +212,34 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
         var file = input.files[0];
 
         app.post_pet.image_file = file;
+    }
+
+
+    // MARK: Pet page
+    function get_pet_data(pet_idx) {
+        if (pet_idx != null) {
+            console.log("💩" + pet_idx);
+        }
+    }
+
+    function back_button_clicked() {
+        main_page();
+    }
+
+
+
+
+    // MARK: Helpers
+
+
+    function clear_form_data(){
+        app.post_pet.pet_title = "";
+        app.post_pet.pet_description = "";
+        app.post_pet.pet_type = "";
+        app.post_pet.pet_price = "";
+        app.post_pet.image_url = null;
+        app.post_pet.image_file = "";
+        app.post_pet.pet_owner_phone_number = "";
     }
 
 
