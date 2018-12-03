@@ -19,7 +19,8 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
                 pet_list: [],
                 pet_list_length: 0,
                 pet_grid_rows: 0,
-                show_feed: false
+                show_feed: false,
+                search_query: null,
             },
             post_pet: {
                 pet_title: null,
@@ -49,6 +50,10 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             main_page: main_page,
             post_pet_page: post_pet_page,
             pet_page: pet_page,
+
+
+            // main page
+            search_pets: search_pets,
 
 
             // post pet page
@@ -129,6 +134,24 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         app.main.show_feed = true;
     }
 
+    function search_pets(e){
+        if(e.keyCode === 13) {
+
+            if (!app.main.search_query) {
+                console.log("woo");
+                get_pets();
+                return
+            }
+
+            $.getJSON(get_pet_query_url, {
+                query: app.main.search_query,
+            }, function(data) {
+                app.main.pet_list = data.pet_list;
+                process_pets();
+            });
+        }
+    }
+
     
     // MARK: Post pet page
 
@@ -163,6 +186,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         if (!app.post_pet.pet_image_url) {
             petImageURL = default_image_url;
         } else {
+
             petImageURL = app.post_pet.pet_image_url;
         }
 
@@ -172,7 +196,6 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             petOwnerPhoneNumber = app.post_pet.pet_owner_phone_number;
         }
 
-        console.log("qwer " + petDescription);
 
         $.post(add_pet_url, {
             pet_title: app.post_pet.pet_title,

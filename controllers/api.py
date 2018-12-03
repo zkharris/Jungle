@@ -46,3 +46,25 @@ def get_pet_data():
 			   )
 
 	return response.json(dict(pet=pet_result)) 
+
+def get_pets_query():
+	results = []
+	query = request.vars.query
+
+	rows = db((db.pet.pet_title.lower() == query) | (db.pet.pet_type.lower() == query)).select(orderby=~db.pet.pet_date)
+
+	for row in rows:
+		results.append(dict(
+			id=row.id,
+			pet_title=row.pet_title,
+			pet_description=row.pet_description,
+			pet_type=row.pet_type,
+			pet_image_url=row.pet_image_URL,
+			pet_price=row.pet_price,
+			pet_date=row.pet_date
+		))
+
+	return response.json(dict(pet_list=results))
+
+
+

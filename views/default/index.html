@@ -24,6 +24,7 @@
   var get_pet_list_url = "{{=URL('api', 'get_pets_list')}}";
   var add_pet_url = "{{=URL('api', 'add_pet', user_signature=True)}}";
   var get_pet_data_url = "{{=URL('api', 'get_pet_data')}}";
+  var get_pet_query_url = "{{=URL('api', 'get_pets_query')}}";
 
 </script>
 
@@ -48,6 +49,8 @@
       hide-details
       prepend-icon="search"
       single-line
+      v-model="main.search_query"
+      v-on:keyup="search_pets"
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn icon href="/jungle/default/user">
