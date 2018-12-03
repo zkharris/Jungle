@@ -79,7 +79,7 @@
                       <div class="pet_date" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
                       <div class="pet_title red--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
                       <div class="pet_price blue--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
-                      <div class="pet_description grey--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_description"></div>
+                      <!-- <div class="pet_description grey--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_description"></div> -->
                     </div>
                   </v-card-title>
                 </v-card>
@@ -113,7 +113,15 @@
       <v-card ref="form">
         <v-card-text>
   
-        
+        <!-- Form errors -->
+        <p v-if="post_pet.errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in post_pet.errors">
+              <div class="error_message" v-bind:text-content.prop="error"></div>
+            </li>
+          </ul>
+        </p>
   
         <!-- Title -->
         <div class="pet_title">

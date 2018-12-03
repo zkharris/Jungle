@@ -20,13 +20,14 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
                 show_feed: false
             },
             post_pet: {
-                pet_title: "",
+                pet_title: null,
                 pet_description: "",
-                pet_type: "",
-                pet_price: "",
-                image_url: "",
+                pet_type: null,
+                pet_price: null,
+                image_url: null,
                 image_file: null,
-                pet_owner_phone_number: ""
+                pet_owner_phone_number: "",
+                errors: []
             },
             pet: {
                 pet_idx: null,
@@ -138,6 +139,16 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
         console.log(app.post_pet.pet_type);
         console.log(app.post_pet.image_url);
 
+        if (validate_form() == true) {
+            post_data();
+            return
+        }
+
+        console.log(app.post_pet.errors.length);
+        
+    }
+
+    function post_data() {
         upload_file();
 
         $.post(add_pet_url, {
@@ -145,7 +156,7 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
             pet_description: app.post_pet.pet_description,
             pet_type: app.post_pet.pet_type,
             pet_owner_phone_number: app.post_pet.pet_owner_phone_number,
-            pet_image_url: app.post_pet.image_url ,
+            pet_image_url: app.post_pet.image_url,
             pet_price: app.post_pet.pet_price
         }, function() {
             main_page();
@@ -221,6 +232,30 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
         app.post_pet.image_file = file;
     }
 
+    function validate_form() {
+        app.post_pet.errors = [];
+
+        if (!app.post_pet.pet_title) {
+            console.log("yip");
+            app.post_pet.errors.push("Post title required");
+        }
+
+        if (!app.post_pet.pet_type) {
+            console.log("yap");
+            app.post_pet.errors.push("Pet type required");
+        }
+
+        if (!app.post_pet.pet_price) {
+            console.log("yop");
+            app.post_pet.errors.push("Pet price required");
+        }
+
+        if (app.post_pet.errors.length > 0) {
+            return false;
+        }
+        return true;
+    }
+
 
     // MARK: Pet page
 
@@ -245,16 +280,16 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
     }
 
     function back_button_clicked() {
+        clear_form_data();
         main_page();
     }
-
-
 
 
     // MARK: Helpers
 
 
     function clear_form_data(){
+        // post pet data
         app.post_pet.pet_title = "";
         app.post_pet.pet_description = "";
         app.post_pet.pet_type = "";
@@ -262,6 +297,20 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
         app.post_pet.image_url = null;
         app.post_pet.image_file = "";
         app.post_pet.pet_owner_phone_number = "";
+
+        // single pet data
+        app.pet.pet_idx = null;
+        app.pet.pet_title = "";
+        app.pet.pet_description = "";
+        app.pet.pet_type = "";
+        app.pet.pet_price = "";
+        app.pet.image_url = null;
+        app.pet.image_file = "";
+        app.pet.pet_owner_phone_number = "";
+    }
+
+    function default_image_source() {
+
     }
 
 
