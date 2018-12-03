@@ -28,3 +28,21 @@ def get_pets_list():
 		))
 
 	return response.json(dict(pet_list=results))
+
+def get_pet_data():
+	pet_id = int(request.vars.pet_id)
+
+	pet_row = db(db.pet.id == pet_id).select().first()
+	pet_result = dict(
+				id = pet_row.id,
+				pet_title = pet_row.pet_title,
+				pet_description = pet_row.pet_description,
+				pet_type = pet_row.pet_type,
+				pet_image_url = pet_row.pet_image_URL,
+				pet_price = pet_row.pet_price,
+				pet_owner_phone_number = pet_row.pet_owner_phone_number,
+				pet_owner_email = pet_row.pet_owner_email,
+				pet_date = pet_row.pet_date
+			   )
+
+	return response.json(dict(pet=pet_result)) 

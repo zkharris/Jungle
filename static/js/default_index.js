@@ -157,13 +157,13 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         if (!app.post_pet.pet_description) {
             petDescription = "No Description";
         } else {
-            petDescription = app.post.pet_description;
+            petDescription = app.post_pet.pet_description;
         }
 
         if (!app.post_pet.pet_image_url) {
             petImageURL = default_image_url;
         } else {
-            petImageURL = app.post.pet_image_url;
+            petImageURL = app.post_pet.pet_image_url;
         }
 
         if (!app.post_pet.pet_owner_phone_number) {

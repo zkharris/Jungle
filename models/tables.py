@@ -4,9 +4,9 @@ def get_user_email():
     return None if auth.user is None else auth.user.email
 
 def get_current_time():
-    return datetime.datetime.utcnow()
-
-# Pet
+    date = datetime.datetime.now()
+    formattedDate = date.strftime("%b. %d")
+    return formattedDate
 
 # TODO: store image(s) into this table
 db.define_table('pet',
