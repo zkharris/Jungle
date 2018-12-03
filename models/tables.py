@@ -4,6 +4,9 @@ def get_user_email():
     return None if auth.user is None else auth.user.email
 
 def get_current_time():
+    return datetime.datetime.utcnow()
+
+def get_formatted_date():
     date = datetime.datetime.now()
     formattedDate = date.strftime("%b. %d")
     return formattedDate
@@ -17,7 +20,8 @@ db.define_table('pet',
                 Field('pet_image_URL', 'text'),
                 Field('pet_owner_phone_number'),
                 Field('pet_price'),
-                Field('pet_date', default=get_current_time())
+                Field('pet_date', default=get_formatted_date()),
+                Field('pet_utc_date', default=get_current_time())
                 )
 
 # Requests

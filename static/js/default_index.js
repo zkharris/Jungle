@@ -138,7 +138,6 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         if(e.keyCode === 13) {
 
             if (!app.main.search_query) {
-                console.log("woo");
                 get_pets();
                 return
             }
@@ -172,10 +171,10 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
     }
 
     function post_data() {
-        upload_file();
-
         var petDescription;
         var petOwnerPhoneNumber;
+        var petImageURL;
+
 
         if (!app.post_pet.pet_description) {
             petDescription = "No Description";
@@ -243,7 +242,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             // Now we should take care of the upload.
             // Gets an upload URL.
             console.log("Trying to get the upload url");
-            $.getJSON('https://upload-dot-luca-teaching.appspot.com/start/uploader/get_upload_url',
+            $.getJSON(get_upload_url,
                 function (data) {
                     // We now have upload (and download) URLs.
                     // The PUT url is used to upload the image.
@@ -251,24 +250,36 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
                     // that is, the GET url is the location where the image will be accessible 
                     // after the upload.  We pass the GET url to the upload_complete function (below)
                     // to notify the server. 
-                    var put_url = data['signed_url'];
-                    var get_url = data['access_url'];
-                    console.log("Received upload url: " + put_url);
+                    var put_url = data.signed_url;
+                    //var get_url = data.access_url;
+                    // console.log("Received upload url: " + get_url);
                     // Uploads the file, using the low-level interface.
                     var req = new XMLHttpRequest();
                     // We listen to the load event = the file is uploaded, and we call upload_complete.
                     // That function will notify the server of the location of the image. 
-                    req.addEventListener("load", upload_complete(get_url));
+                    req.onreadystatechange= function(){
+                    if (req.readyState==4 || req.readyState=="complete") {
+                        var get_url = data.access_url;
+                        console.log('The file was uploaded; it is now available at ' + get_url);
+                        app.post_pet.pet_image_url = get_url;
+                        console.log(app.post_pet.pet_image_url);
+                    }
+    }
+                    req.addEventListener("load", upload_complete(req));
                     // TODO: if you like, add a listener for "error" to detect failure.
                     req.open("PUT", put_url, true);
                     req.send(file);
-                });
+
+                    console.log("🤯" + req.readyState);
+                    });
         }
     }
 
-    function upload_complete(get_url) {
-        console.log('The file was uploaded; it is now available at ' + get_url);
-        app.post_pet.image_url = get_url;
+    function upload_complete(req) {
+        //var get_url = data.access_url;
+        //console.log('The file was uploaded; it is now available at ' + get_url);
+        // app.post_pet.image_url = data.access_url;
+        console.log("💩" + req.readyState)
     }
 
     function change_image_url(event) {
@@ -276,6 +287,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         var file = input.files[0];
 
         app.post_pet.image_file = file;
+        upload_file();
     }
 
     function validate_form() {

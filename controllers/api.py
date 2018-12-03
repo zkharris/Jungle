@@ -14,7 +14,7 @@ def add_pet():
 def get_pets_list():
 	results = []
 
-	rows = db().select(db.pet.ALL, orderby=~db.pet.pet_date)
+	rows = db().select(db.pet.ALL, orderby=~db.pet.pet_utc_date)
 
 	for row in rows:
 		results.append(dict(
@@ -51,7 +51,7 @@ def get_pets_query():
 	results = []
 	query = request.vars.query
 
-	rows = db((db.pet.pet_title.lower() == query) | (db.pet.pet_type.lower() == query)).select(orderby=~db.pet.pet_date)
+	rows = db((db.pet.pet_title.lower() == query) | (db.pet.pet_type.lower() == query)).select(orderby=~db.pet.pet_utc_date)
 
 	for row in rows:
 		results.append(dict(
