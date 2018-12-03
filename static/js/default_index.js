@@ -7,6 +7,8 @@ function extend(a, b) {
 // Enumerates an array.
 var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;});};
 
+var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813e9119d778164--paw-patrol-silhouette-dog-silhouette.jpg";
+
     var app = new Vue({
         el: "#app",
         data: {
@@ -21,7 +23,7 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
             },
             post_pet: {
                 pet_title: null,
-                pet_description: "",
+                pet_description: null,
                 pet_type: null,
                 pet_price: null,
                 image_url: null,
@@ -61,10 +63,10 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
             cancel_button_clicked: cancel_button_clicked,
 
             // pet page
+
             back_button_clicked: back_button_clicked,
         }
     });
-
 
 
     // MARK: Navigation
@@ -93,7 +95,6 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
 
 
     // MARK: Main page
-
 
     function get_pets() {
         $.getJSON(get_pet_list_url,
@@ -129,8 +130,7 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
     }
 
     
-    // MAR: Post pet page
-
+    // MARK: Post pet page
 
     function submit_button_clicked() {
         console.log("submit button clicked on post pet screen");
@@ -151,12 +151,35 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
     function post_data() {
         upload_file();
 
+        var petDescription;
+        var petOwnerPhoneNumber;
+
+        if (!app.post_pet.pet_description) {
+            petDescription = "No Description";
+        } else {
+            petDescription = app.post.pet_description;
+        }
+
+        if (!app.post_pet.pet_image_url) {
+            petImageURL = default_image_url;
+        } else {
+            petImageURL = app.post.pet_image_url;
+        }
+
+        if (!app.post_pet.pet_owner_phone_number) {
+            petOwnerPhoneNumber = "No Phone Number";
+        } else {
+            petOwnerPhoneNumber = app.post_pet.pet_owner_phone_number;
+        }
+
+        console.log("qwer " + petDescription);
+
         $.post(add_pet_url, {
             pet_title: app.post_pet.pet_title,
-            pet_description: app.post_pet.pet_description,
+            pet_description: petDescription,
             pet_type: app.post_pet.pet_type,
-            pet_owner_phone_number: app.post_pet.pet_owner_phone_number,
-            pet_image_url: app.post_pet.image_url,
+            pet_owner_phone_number: petOwnerPhoneNumber,
+            pet_image_url: petImageURL,
             pet_price: app.post_pet.pet_price
         }, function() {
             main_page();
@@ -287,7 +310,6 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
 
     // MARK: Helpers
 
-
     function clear_form_data(){
         // post pet data
         app.post_pet.pet_title = "";
@@ -309,18 +331,9 @@ var enumerate = function(v) { var k=0; return v.map(function(e) {e._idx = k++;})
         app.pet.pet_owner_phone_number = "";
     }
 
-    function default_image_source() {
 
-    }
 
 
 
 
     get_pets();
-
-
-
-
-
-
-
