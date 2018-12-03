@@ -15,7 +15,7 @@
 
 
   <!-- css -->
-  <link href="{{=URL('static', 'css/post_pet.css')}}" rel="stylesheet" type="text/css"/>
+  <link href="{{=URL('static', 'css/index.css')}}" rel="stylesheet" type="text/css"/>
   <!-- <link href="{{=URL('static', 'css/stupid.css')}}" rel="stylesheet" type="text/css" /> -->
 
   <!-- api -->
@@ -28,6 +28,7 @@
   var get_upload_url = "{{=URL('uploader', 'get_upload_url')}}";
 </script>
 
+<!-- Scripts -->
 </head>
 
 <body>
@@ -37,7 +38,8 @@
 
 
 <div id="app">
-  <div v-show="on_main_page" id="main_page">
+  
+
     <v-toolbar dark tabs flat color="light green">
       <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
       <a href="/jungle/default/index" >
@@ -62,7 +64,7 @@
 
     <!-- MARK: Main feed -->
     <!-- TODO: css -->
-
+  <div v-show="on_main_page" id="main_page">
     <div v-show="main.show_feed" id="pet_list">
       <div class="main.pet_list" v-for="i in main.pet_grid_rows">
         <template>
@@ -111,6 +113,17 @@
 
   <!-- MARK: Post Pet Page -->
   <div v-if="on_post_pet_page">
+
+    <!-- cancel button -->
+          <v-btn
+          id="cancel"
+          v-on:click="cancel_button_clicked();"
+          flat
+          outline
+          left
+          color="FF0000"
+          >Cancel</v-btn>
+
   <v-layout justify-center>
     <v-flex xs12 sm10 md8 lg6>
       <v-card ref="form">
@@ -139,6 +152,15 @@
           ></v-text-field>
         </div>
 
+        <!-- Image uploading -->
+        <p class="upload_image_title"> Upload an image </p>
+        <div id="pet_images">
+          <input type="file" accept="image/*" @change="onFileChange($event);  change_image_url($event)"/>
+          <div class="image_div">
+            <img class="preview_image" :src="post_pet.image_url"/>
+          </div>
+        </div>
+
         <!-- Description -->
         <div class="pet description">
           <v-textarea
@@ -150,30 +172,32 @@
           box
           color="green"
           counter
-          maxlength="200"
+          maxlength="700"
           ></v-textarea>
         </div>
 
         <!-- Pet type -->
         <div class="pet_type">
-          <div class="child inline-block-child"></h4>What kind of pet are they?</h4></  div>
-          <div class="child inline-block-child"><select v-model="post_pet.pet_type"   class="petTypeSelector">
-            <option disabled value="">Please select a type listed or 'Other'</option>
-            <option>Dog</option>
-            <option>Cat</option>
-            <option>Reptile</option>
-            <option>Bird</option>
-            <option>Farm</option>
-            <option>Other</option>
-          </select></div>
-          <span>
+          <v-text-field
+            v-model="post_pet.pet_type"
+            label="What kind of pet are they? (e.g. Dog, Cat)"
+          ></v-text-field>
+          <!-- Could not get this to work -->
+            <!-- <v-select 
+            v-model="post_pet.pet_type" 
+            :items="items"
+            item-text="items.text"
+            box
+            label="What type of pet are they?"
+            single-line
+            ></v-select> -->
         </div>
 
         <!-- price -->
         <div class="pet_price_input">
           <v-text-field
             v-model="post_pet.pet_price"
-            label="Amount"
+            label="Price"
             value="10.00"
             prefix="$"
             color="green"
@@ -193,71 +217,72 @@
             ></v-text-field>
         </div>
 
-        <!-- Image uploading -->
-        <h6> Upload an image </h6>
-        <div id="pet_images">
-          <input type="file" accept="image/*" @change="onFileChange($event);  change_image_url($event)"/>
-          <div class="preview">
-            <img :src="post_pet.image_url"/>
-          </div>
-        </div>
-      </div>
-
-      <v-card-actions>
-      <!-- cancel button -->
-          <v-btn
-          id="cancel"
-          v-on:click="cancel_button_clicked();"
-          flat
-          >Cancel</v-btn>
-            <v-spacer></v-spacer>
-        <!-- Submit button -->
-          <v-btn
-          id="submit"
-          v-on:click="submit_button_clicked();"
-          flat
-          >Submit</button>
-        </v-btn>
-      </v-card-actions>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <!-- Submit button -->
+            <v-btn
+            id="submit"
+            v-on:click="submit_button_clicked();"
+            flat
+            dark
+            outline
+            right
+            color="#006400"
+            >Submit</button>
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
-  </div>
+</div>
 
 
 
 
   <!-- MARK: Pet page -->
   <div v-if="on_pet_page" class="pet_page">
-    <div class="back button">
-      <button v-on:click="back_button_clicked();" class="backButton">Back</button>
+    <div class="back_button_div">
+      <v-btn 
+        id="back_button"
+        v-on:click="back_button_clicked();"
+        flat
+        dark
+        outline
+        right
+        color="#006400"
+      >Back</v-btn>
     </div>
 
+    <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div> 
 
-    <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+    <div class="top_section">
+      <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
 
+      <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
+    </div>
 
-    <div class="single_pet_image">
-      <div class="preview">
-        <img :src="pet.pet_image_url"/>
+    <div class="middle_section">
+      <div class="single_pet_image">
+        <img class="single_pet_image" :src="pet.pet_image_url"/>
+      </div>
+
+      <div class="contact_information">
+        <p class="contact_info_title">Contact Information</p>
+
+        <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+
+        <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
+
       </div>
     </div>
 
+    <div class="bottom_section">
+      <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
 
-    <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
+    </div>
 
-    <div class="single_pet_type" v-bind:text-content.prop="pet.pet_type"></div>
-
-    <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
-
-    <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date"></div>
-
-    <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
-
-    <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_email"></div>
-
-
-
+<!--     <div class="single_pet_type" v-bind:text-content.prop="pet.pet_type"></div>
+ -->
   </div>
 
 </div>

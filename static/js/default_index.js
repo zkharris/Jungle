@@ -174,7 +174,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         var petDescription;
         var petOwnerPhoneNumber;
         var petImageURL;
-
+        var petPrice = "$" + app.post_pet.pet_price;
 
         if (!app.post_pet.pet_description) {
             petDescription = "No Description";
@@ -192,7 +192,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         if (!app.post_pet.pet_owner_phone_number) {
             petOwnerPhoneNumber = "No Phone Number";
         } else {
-            petOwnerPhoneNumber = app.post_pet.pet_owner_phone_number;
+            petOwnerPhoneNumber = format_phone_number(app.post_pet.pet_owner_phone_number);
         }
 
 
@@ -202,7 +202,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             pet_type: app.post_pet.pet_type,
             pet_owner_phone_number: petOwnerPhoneNumber,
             pet_image_url: petImageURL,
-            pet_price: app.post_pet.pet_price
+            pet_price: petPrice
         }, function() {
             main_page();
         });
@@ -364,6 +364,16 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         app.pet.image_url = null;
         app.pet.image_file = "";
         app.pet.pet_owner_phone_number = "";
+    }
+
+    function format_phone_number(phoneNumberString) {
+        var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
+        var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+        
+        if (match) {
+            return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+        }
+        return null 
     }
 
 

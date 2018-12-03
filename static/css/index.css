@@ -1,0 +1,78 @@
+.pet_images {
+	padding-bottom: 8px;
+}
+
+
+.preview_image {
+	max-height: 100%;
+	max-width: 100%;
+	padding-bottom: 8px;
+}
+
+.v-select .dropdown-menu {
+	display: block;
+}
+
+.back_button_div {
+	padding: 25px;
+}
+
+.back_button_text {
+	font-family: "comic-sans", Times, serif;
+}
+
+.single_pet_title {
+	padding-left: 75px;
+	padding-bottom: 20px; 
+	font-weight: 900;
+	font-size: 175%;
+	display: inline-block;
+	font-family: "Verdana", "Times New Roman", Times, serif;
+}
+
+.single_pet_price {
+	margin-left: 50px;
+	padding-left: 5px;
+	padding-right: 5px;
+	display: inline-block;
+	font-size: 150%;
+	border: 1px solid green;
+}
+
+.single_pet_date {
+	padding-left: 75px;
+	padding-bottom: 20px;
+	font-family: "Verdana", "Times New Roman", Times, serif;
+}
+
+.single_pet_image {
+	padding-left: 50px;
+	padding-bottom: 20px;
+	width: 80%;
+	height: 80%;
+	display: inline-block;
+}
+
+.contact_information {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.contact_info_title {
+	font-family: "Verdana", "Times New Roman", Times, serif;
+	font-size: 150%;
+	text-decoration: underline;
+}
+
+.single_pet_description {
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-bottom: 50px;
+	font-size: 125%;
+	font-family: "Verdana", "Times New Roman", Times, serif;
+
+}
+
+.single_pet_phone_number {
+
+}
