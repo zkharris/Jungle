@@ -11,7 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"> -->
-  <link rel="shortcut icon" type="image/png" href="jungle/static/images/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png"/>
 
 
   <!-- css -->
@@ -39,8 +39,8 @@
   <div v-show="on_main_page" id="main_page">
     <v-toolbar dark tabs flat color="light green">
       <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
-      <a href="/jungle" >
-        <img src="jungle\static\images\favicon.png" height="38px" width="38px">
+      <a href="/jungle/default/index" >
+        <img src="..\static\images\favicon.png" height="38px" width="38px">
       </a>
       <v-toolbar-title>The Jungle</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -112,7 +112,7 @@
     <v-flex xs12 sm10 md8 lg6>
       <v-card ref="form">
         <v-card-text>
-  
+
         <!-- Form errors -->
         <p v-if="post_pet.errors.length">
           <b>Please correct the following error(s):</b>
@@ -122,7 +122,7 @@
             </li>
           </ul>
         </p>
-  
+
         <!-- Title -->
         <div class="pet_title">
           <v-text-field
@@ -135,7 +135,7 @@
           required
           ></v-text-field>
         </div>
-  
+
         <!-- Description -->
         <div class="pet description">
           <v-textarea
@@ -150,7 +150,7 @@
           maxlength="200"
           ></v-textarea>
         </div>
-  
+
         <!-- Pet type -->
         <div class="pet_type">
           <div class="child inline-block-child"></h4>What kind of pet are they?</h4></  div>
@@ -165,7 +165,7 @@
           </select></div>
           <span>
         </div>
-  
+
         <!-- price -->
         <div class="pet_price_input">
           <v-text-field
@@ -176,7 +176,7 @@
             color="green"
           ></v-text-field>
         </div>
-  
+
         <!-- contact information -->
         <div class="contact_info">
           <v-text-field
@@ -189,7 +189,7 @@
             required
             ></v-text-field>
         </div>
-  
+
         <!-- Image uploading -->
         <h6> Upload an image </h6>
         <div id="pet_images">
@@ -199,7 +199,7 @@
           </div>
         </div>
       </div>
-  
+
       <v-card-actions>
       <!-- cancel button -->
           <v-btn
@@ -216,8 +216,11 @@
           >Submit</button>
         </v-btn>
       </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
   </div>
-  
+
 
 
 
@@ -254,13 +257,7 @@
 
   </div>
 
-    </v-card>
-  </v-flex>
-</v-layout>
-
-
 </div>
-
 
 </body>
 
