@@ -38,11 +38,11 @@
 <body>
 
 
-<!-- MARK: Main Page -->
 
 
 <div id="app">
-  
+
+
 
     <v-toolbar dark tabs flat color="light green">
       <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
@@ -71,10 +71,10 @@
     </v-toolbar>
 
 
-    <!-- MARK: Main feed -->
+    <!-- MARK: Main Page -->
     <!-- TODO: css -->
-  <div v-show="on_main_page" id="main_page">
-    <div v-show="main.show_feed" id="pet_list">
+    <div v-show="on_main_page" id="main_page">
+      <div v-show="main.show_feed" id="pet_list">
       <!-- <div class="main.pet_list" v-for="i in main.pet_grid_rows"> -->
         <template>
         <v-container
@@ -99,15 +99,15 @@
                   <v-card-title>
                     <div>
                       <div class="pet_date" v-bind:text-content.prop="pet.pet_date"></div>
-                      <div class="pet_title red--text" v-bind:text-content.prop="pet.pet_title"></div>
-                      <div class="pet_price blue--text" v-bind:text-content.prop="pet.pet_price">$</div>
+                      <div class="pet_card_title" v-bind:text-content.prop="pet.pet_title"></div>
+                      <div class="pet_card_price" v-bind:text-content.prop="pet.pet_price">$</div>
                     </div>
                   </v-card-title>
               </v-card>
             </div>
             </v-flex>
           </v-layout>
-      </v-container>
+        </v-container>
       </template>
     </div>
 

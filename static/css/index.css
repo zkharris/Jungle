@@ -14,6 +14,15 @@
 	cursor: pointer;
 }
 
+.pet_card_title {
+	color: #0645AD;
+	font-size: 130%;
+}
+
+.pet_card_price {
+	color: #228B22;
+}
+
 
 .preview_image {
 	max-height: 100%;
