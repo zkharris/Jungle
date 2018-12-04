@@ -8,9 +8,9 @@
 }
 
 .pet_card {
-	margin-bottom: 30px;
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-bottom: 20px;
+	margin-left: 15px;
+	margin-right: 15px;
 	cursor: pointer;
 }
 
@@ -22,7 +22,6 @@
 .pet_card_price {
 	color: #228B22;
 }
-
 
 .preview_image {
 	max-height: 100%;
@@ -91,9 +90,5 @@
 	padding-bottom: 50px;
 	font-size: 125%;
 	font-family: "Verdana", "Times New Roman", Times, serif;
-
-}
-
-.single_pet_phone_number {
 
 }
