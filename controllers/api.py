@@ -66,5 +66,12 @@ def get_pets_query():
 
 	return response.json(dict(pet_list=results))
 
+def get_current_user():
+	result = auth.user.email if auth.is_logged_in() else None
+	print(result)
+
+	return response.json(dict(current_user=result))
+	
+
 
 

@@ -15,6 +15,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             on_main_page: true,
             on_post_pet_page: false,
             on_pet_page: false,
+            current_user: null,
             main: {
                 pet_list: [],
                 pet_list_length: 0,
@@ -376,9 +377,18 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         return null 
     }
 
+    function get_current_user() {
+        $.getJSON(get_current_user_url, {
+        }, function(data) {
+            app.current_user = data.current_user;
+            app.current_user = app.current_user.toLowerCase();
+            console.log(app.current_user);
+        });   
+    }
 
+    function init_main() {
+        get_pets();
+        get_current_user();
+    }
 
-
-
-
-    get_pets();
+    init_main();

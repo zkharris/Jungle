@@ -26,9 +26,13 @@
   var get_pet_data_url = "{{=URL('api', 'get_pet_data')}}";
   var get_pet_query_url = "{{=URL('api', 'get_pets_query')}}";
   var get_upload_url = "{{=URL('uploader', 'get_upload_url')}}";
+  var get_current_user_url = "{{=URL('api', 'get_current_user')}}";
 </script>
 
 <!-- Scripts -->
+
+
+
 </head>
 
 <body>
@@ -55,10 +59,15 @@
       v-on:keyup="search_pets"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon href="/jungle/default/user">
-        <!-- 3 vertical dots button -->
-        <v-icon>more_vert</v-icon>
-      </v-btn>
+      <!-- TODO: Fix capitilization here -->
+      <v-btn 
+        href="/jungle/default/user"
+        v-bind:text-content.prop="current_user ? current_user : 'login'"
+        round
+        dark
+        outline
+        color="#FFFFFF"
+      ></v-btn>
     </v-toolbar>
 
 
@@ -244,8 +253,6 @@
 </div>
 
 
-
-
   <!-- MARK: Pet page -->
   <div v-if="on_pet_page" class="pet_page">
     <div class="back_button_div">
@@ -276,9 +283,15 @@
       <div class="contact_information">
         <p class="contact_info_title">Contact Information</p>
 
-        <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+        <!-- TODO: put a phone icon somewhere here, css for phone number -->
+        <div class="phone_row">
+          <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+        </div>
 
-        <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
+        <!-- TODO: put a mail icon somewhere here, css for email -->
+        <div class="email_row">
+          <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
+        </div>
 
       </div>
     </div>
