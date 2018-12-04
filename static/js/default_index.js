@@ -381,8 +381,6 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         $.getJSON(get_current_user_url, {
         }, function(data) {
             app.current_user = data.current_user;
-            app.current_user = app.current_user.toLowerCase();
-            console.log(app.current_user);
         });   
     }
 
