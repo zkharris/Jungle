@@ -71,7 +71,23 @@ def get_current_user():
 	print(result)
 
 	return response.json(dict(current_user=result))
-	
 
 
+def get_pet_owner():
+	pet_id = int(request.vars.petID)
+	pet = db(pet_id == db.pet.id).select().first()
 
+	if auth.user is not None: 
+		if pet.pet_owner_email == auth.user.email:
+			return response.json(dict(result=1))
+
+	return response.json(dict(result=0))
+
+@auth.requires_login()
+def delete_pet():
+	print("trying to delete pet")
+	pet_id = int(request.vars.petID)
+
+	db((db.pet.id == pet_id) & (db.pet.pet_owner_email == auth.user.email)).delete()
+
+	return "😭"

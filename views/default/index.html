@@ -27,6 +27,8 @@
   var get_pet_query_url = "{{=URL('api', 'get_pets_query')}}";
   var get_upload_url = "{{=URL('uploader', 'get_upload_url')}}";
   var get_current_user_url = "{{=URL('api', 'get_current_user')}}";
+  var get_pet_owner_url = "{{=URL('api', 'get_pet_owner')}}";
+  var delete_pet_url = "{{=URL('api', 'delete_pet')}}";
 </script>
 
 <!-- Scripts -->
@@ -254,17 +256,31 @@
 
 
   <!-- MARK: Pet page -->
+
   <div v-if="on_pet_page" class="pet_page">
     <div class="back_button_div">
-      <v-btn 
-        id="back_button"
-        v-on:click="back_button_clicked();"
-        flat
-        dark
-        outline
-        right
-        color="#006400"
-      >Back</v-btn>
+      <v-layout row>
+        <v-btn 
+          id="back_button"
+          v-on:click="back_button_clicked();"
+          flat
+          dark
+          outline
+          right
+          color="#006400"
+        >Back</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
+          v-if="pet.is_pet_owner"
+          id="delete_button"
+          v-on:click="delete_button_clicked(pet.pet_idx);"
+          flat
+          dark
+          outline
+          right
+          color="#ff0000"
+        >Delete</v-btn>
+      </v-layout>
     </div>
 
     <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div> 
@@ -301,8 +317,6 @@
 
     </div>
 
-<!--     <div class="single_pet_type" v-bind:text-content.prop="pet.pet_type"></div>
- -->
   </div>
 
 </div>

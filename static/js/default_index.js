@@ -34,6 +34,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
                 errors: []
             },
             pet: {
+                is_pet_owner: null,
                 pet_idx: null,
                 pet_title: "",
                 pet_description: "",
@@ -71,6 +72,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             // pet page
 
             back_button_clicked: back_button_clicked,
+            delete_button_clicked: delete_button_clicked,
         }
     });
 
@@ -79,6 +81,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
 
     function main_page() {
         get_pets();
+        get_current_user();
         app.on_main_page = true;
         app.on_post_pet_page = false;
         app.on_pet_page = false;
@@ -95,7 +98,8 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         app.on_post_pet_page = false;
         app.on_pet_page = true;
         app.pet.pet_idx = pet_idx;
-
+        
+        get_pet_owner(app.pet.pet_idx);
         get_pet_data(app.pet.pet_idx);
     }
 
@@ -341,6 +345,30 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
     function back_button_clicked() {
         clear_form_data();
         main_page();
+    }
+
+    function get_pet_owner(pet_idx) {
+        if (pet_idx != null) {
+            $.getJSON(get_pet_owner_url, {
+                petID: pet_idx,
+            }, function(data) {
+                if (data.result == 1) {
+                    app.pet.is_pet_owner = true;
+                } else {
+                    app.pet.is_pet_owner = false;
+                }
+            });
+        }
+    }
+
+    function delete_button_clicked(pet_idx) {
+        if (pet_idx != null) {
+            $.post(delete_pet_url, {
+                petID: pet_idx,
+            }, function (data) {
+                main_page();
+            });
+        }
     }
 
 
