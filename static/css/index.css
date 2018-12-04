@@ -2,6 +2,18 @@
 	padding-bottom: 8px;
 }
 
+#pet_list {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.pet_card {
+	margin-bottom: 30px;
+	margin-left: 25px;
+	margin-right: 25px;
+	cursor: pointer;
+}
+
 
 .preview_image {
 	max-height: 100%;
@@ -48,8 +60,8 @@
 .single_pet_image {
 	padding-left: 50px;
 	padding-bottom: 20px;
-	width: 80%;
-	height: 80%;
+	width: 75%;
+	height: 75%;
 	display: inline-block;
 }
 

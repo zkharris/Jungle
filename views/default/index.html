@@ -66,33 +66,40 @@
     <!-- TODO: css -->
   <div v-show="on_main_page" id="main_page">
     <div v-show="main.show_feed" id="pet_list">
-      <div class="main.pet_list" v-for="i in main.pet_grid_rows">
+      <!-- <div class="main.pet_list" v-for="i in main.pet_grid_rows"> -->
         <template>
-        <v-container grid-list-md>
-          <v-layout row>
-            <v-flex v-for="j in 3" :key="`4${j}`">
-                <v-card v-if="main.pet_list[(i-1) * 3 + (j-1)] !== undefined"
-                v-on:click="pet_page(main.pet_list[(i-1) * 3 + (j-1)].id)">
-                  <v-img
-                    width="300px"
+        <v-container
+          fluid
+          grid-list-md
+        >
+          <v-layout row wrap>
+            <v-flex
+              v-for="pet in main.pet_list"
+              v-bind="{ [`xs${4}`]: true}"
+              :key="pet.title"
+            >
+            <div class="pet_card">
+              <v-card 
+                v-on:click="pet_page(pet.id)"
+                >
+                <v-img
+                    width="100%"
                     height="300px"
-                    v-bind:src="main.pet_list[(i-1) * 3 + (j-1)].pet_image_url"
+                    v-bind:src="pet.pet_image_url"
                   ></v-img>
                   <v-card-title>
                     <div>
-                    <div>
-                      <div class="pet_date" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_date"></div>
-                      <div class="pet_title red--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_title"></div>
-                      <div class="pet_price blue--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_price">$</div>
-                      <!-- <div class="pet_description grey--text" v-bind:text-content.prop="main.pet_list[(i-1) * 3 + (j-1)].pet_description"></div> -->
+                      <div class="pet_date" v-bind:text-content.prop="pet.pet_date"></div>
+                      <div class="pet_title red--text" v-bind:text-content.prop="pet.pet_title"></div>
+                      <div class="pet_price blue--text" v-bind:text-content.prop="pet.pet_price">$</div>
                     </div>
                   </v-card-title>
-                </v-card>
-              </v-flex>
-            </v-layout>
-        </v-container>
+              </v-card>
+            </div>
+            </v-flex>
+          </v-layout>
+      </v-container>
       </template>
-      </div>
     </div>
 
 
