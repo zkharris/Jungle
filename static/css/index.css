@@ -3,8 +3,13 @@
 }
 
 #pet_list {
-	padding-left: 50px;
-	padding-right: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+#main_title_text {
+	font-family: "Verdana", "Times New Roman", Times, serif;
+	margin-bottom: 12px;
 }
 
 .pet_card {
@@ -14,12 +19,18 @@
 	cursor: pointer;
 }
 
+.pet_card_date {
+	font-family: "Verdana", "Times New Roman", Times, serif;
+}
+
 .pet_card_title {
 	color: #0645AD;
 	font-size: 130%;
+	font-family: "Verdana", "Times New Roman", Times, serif;
 }
 
 .pet_card_price {
+	font-family: "Verdana", "Times New Roman", Times, serif;
 	color: #228B22;
 }
 
@@ -27,10 +38,6 @@
 	max-height: 100%;
 	max-width: 100%;
 	padding-bottom: 8px;
-}
-
-.v-select .dropdown-menu {
-	display: block;
 }
 
 .back_button_div {

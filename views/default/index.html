@@ -45,8 +45,6 @@
 
 <div id="app">
 
-
-
     <v-toolbar dark tabs flat color="light green">
       <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
       <a href="/jungle/default/index" >
@@ -85,6 +83,33 @@
           fluid
           grid-list-md
         >
+
+        <v-layout row align-start>
+          <!-- TODO: Fix dropown menu -->
+          <v-flex xs2 sm2>
+            <v-select
+              :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
+              label="Sort by"
+              box
+            ></v-select>
+          </v-flex>
+
+          <v-flex xs2 sm2 >
+            <v-text-field 
+              hide-details
+              placeholder="Tags..."
+              single-line
+              box
+            ></v-text-field>
+          </v-flex>
+       </v-layout>
+
+       <v-layout row align-start>
+          <v-flex xs4 sm4>
+            <h2 id="main_title_text"> Top posts </h2>
+          </v-flex>
+        </v-layout>
+
           <v-layout row wrap>
             <v-flex
               v-for="pet in main.pet_list"
@@ -102,7 +127,7 @@
                   ></v-img>
                   <v-card-title>
                     <div>
-                      <div class="pet_date" v-bind:text-content.prop="pet.pet_date"></div>
+                      <div class="pet_card_date" v-bind:text-content.prop="pet.pet_date"></div>
                       <div class="pet_card_title" v-bind:text-content.prop="pet.pet_title"></div>
                       <div class="pet_card_price" v-bind:text-content.prop="pet.pet_price">$</div>
                     </div>
