@@ -12,6 +12,7 @@
 
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">  -->
   <link rel="shortcut icon" type="image/png" href="{{=URL('static', 'images/favicon.png')}}"/>
+  <link rel="phone icon" type="image/png" hred="{{=URL('static', 'images/phone.png')}}"/>
 
 
   <!-- css -->
@@ -302,11 +303,13 @@
 
         <!-- TODO: put a phone icon somewhere here, css for phone number -->
         <div class="phone_row">
+          <img class="phone_image" src="{{=URL('static', 'images/phone.png')}}" height="38px" width="38px">
           <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
         </div>
 
         <!-- TODO: put a mail icon somewhere here, css for email -->
         <div class="email_row">
+          <img class="email_image" src="{{=URL('static', 'images/email.png')}}" height="38px" width="38px">
           <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
         </div>
 

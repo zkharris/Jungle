@@ -90,5 +90,32 @@
 	padding-bottom: 50px;
 	font-size: 125%;
 	font-family: "Verdana", "Times New Roman", Times, serif;
+}
 
+.single_pet_phone_number {
+	font-family: "Verdana", "Times New Roman", Times, serif;
+	font-size: 150%;
+	padding-bottom: 25px;
+	margin-bottom: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.single_pet_email {
+	font-family: "Verdana", "Times New Roman", Times, serif;
+	font-size: 150%;
+	padding-bottom: 25px;
+	margin-bottom: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.phone_image {
+	display: inline-block;
+}
+
+.email_image {
+	display: inline-block;
 }
