@@ -13,7 +13,7 @@ def get_formatted_date():
 
 def get_message_formatted_date():
     date = datetime.datetime.now()
-    formattedDate = date.strftime("%B %d, %-I:%M%p")
+    formattedDate = date.strftime("%B %d, %-H:%M%p")
     return formattedDate
 
 
