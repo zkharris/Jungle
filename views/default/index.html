@@ -30,18 +30,14 @@
   var get_current_user_url = "{{=URL('api', 'get_current_user')}}";
   var get_pet_owner_url = "{{=URL('api', 'get_pet_owner')}}";
   var delete_pet_url = "{{=URL('api', 'delete_pet')}}";
+  var get_chat_channels_url = "{{=URL('api', 'get_chat_channels')}}";
+  var add_message_url = "{{=URL('api', 'add_message')}}";
+  var get_messages_url = "{{=URL('api', 'get_messages')}}";
+  var owner_get_chat_channels_url = "{{=URL('api', 'owner_get_chat_channels')}}";
 </script>
 
-<!-- Scripts -->
-
-
-
 </head>
-
 <body>
-
-
-
 
 <div id="app">
 
@@ -84,8 +80,8 @@
           grid-list-md
         >
 
-        <v-layout row align-start>
-          <!-- TODO: Fix dropown menu -->
+        <!-- <v-layout row align-start>
+          <!-- TODO: Fix dropown menu 
           <v-flex xs2 sm2>
             <v-select
               :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
@@ -102,7 +98,7 @@
               box
             ></v-text-field>
           </v-flex>
-       </v-layout>
+       </v-layout> -->
 
        <v-layout row align-start>
           <v-flex xs4 sm4>
@@ -316,14 +312,93 @@
       <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
 
       <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
+
+      <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
+
     </div>
 
     <div class="middle_section">
-      <div class="single_pet_image">
-        <img class="single_pet_image" :src="pet.pet_image_url"/>
+      <img class="single_pet_image" :src="pet.pet_image_url"/>
+
+      <div class="chat_window">
+        <div class="chat_title">
+          <p class="chat_title">Chat</p>
+          <hr>
+        </div>
+
+        <div v-if="pet.is_pet_owner" class="channels_list">
+          <v-card class="channels_card"
+            width="525px"
+          >
+              <v-layout align-center justify-space-between row fill-height class="channels_container">
+              <v-flex
+                v-for="channel in chat.channels_list"
+                :key="channel.pet_requester_email"
+              >
+                <v-card class="channel_card"
+                  width="97%"
+                  height="100%"
+                  color="#A9A9A9"
+                  v-on:click="get_messages_on_click(channel.id);"
+                >
+                  <v-card-title>
+                    <div class="channel_title" v-bind:text-content.prop="channel.pet_requester_email">
+                    </div>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </div>
+
+        <div>
+        <v-card class="chat_card"
+          width="525px"
+          height="350px">
+
+          <v-flex
+              v-for="message in chat.message_list"
+              :key="message.id"
+            >
+
+            <v-card class="message_card"
+              width="97%"
+              height="100%">
+
+              <v-card-title>
+                <div>
+                  <div>
+                    <div class="message_card_email" v-bind:text-content.prop="message.message_sender_email"></div>
+                    <div class="message_card_date" v-bind:text-content.prop="message.message_date"></div>
+                  </div>
+
+
+
+                <div class="message_card_content" v-bind:text-content.prop="message.message_content"></div>
+              </div>
+              </v-card-title>
+            </v-card>
+        </v-card>
       </div>
 
-      <div class="contact_information">
+          <div class="message_area">
+            <div class="message_input_box">
+              <v-text-field
+                v-model="chat.message" 
+                placeholder="Send a message"
+                outline
+                append-icon="send"
+                @click:append="send_message();"
+              >
+
+              </v-text-field>
+            </div>
+          </div>
+
+      </div>
+    </div>
+
+    <div class="contact_information">
         <p class="contact_info_title">Contact Information</p>
 
         <!-- TODO: put a phone icon somewhere here, css for phone number -->
@@ -341,10 +416,7 @@
       </div>
     </div>
 
-    <div class="bottom_section">
-      <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
-
-    </div>
+    
 
   </div>
 

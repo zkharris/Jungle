@@ -11,7 +11,14 @@ def get_formatted_date():
     formattedDate = date.strftime("%b. %d")
     return formattedDate
 
-# TODO: store image(s) into this table
+def get_message_formatted_date():
+    date = datetime.datetime.now()
+    formattedDate = date.strftime("%B %d, %-I:%M%p")
+    return formattedDate
+
+
+# MARK: Pet
+
 db.define_table('pet',
                 Field('pet_title', 'text'),
                 Field('pet_description', default="No Description"),
@@ -24,13 +31,24 @@ db.define_table('pet',
                 Field('pet_utc_date', default=get_current_time())
                 )
 
-# Requests
+# MARK: Chat
+# pet_post = pet.id
 
-db.define_table('requests',
-				Field('pet_id'),
-				Field('petOwnerEmail'),
-				Field('petRenterEmail')
-				)
+db.define_table('chat',
+                Field('pet_post'),
+                Field('pet_requester_email'),
+                Field('pet_owner_email'),
+                )
+
+# MARK: Message
+# chat_id = chat.id
+db.define_table('message',
+                Field('chat_id'),
+                Field('message_sender_email'),
+                Field('message_content'),
+                Field('message_utc_date', default=get_current_time()),
+                Field('message_date', default=get_message_formatted_date())
+                )
 
 
 

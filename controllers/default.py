@@ -8,16 +8,6 @@
 def index():
     return dict()
 
-# post pet
-def post_pet():
-    return dict()
-
-def sample():
-    return dict()
-
-def index2():
-    return dict()
-
 # ---- API (example) -----
 @auth.requires_login()
 def api_get_user_email():

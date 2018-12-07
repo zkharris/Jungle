@@ -43,6 +43,12 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
                 image_url: null,
                 pet_owner_email: "",
                 pet_owner_phone_number: "",
+            },
+            chat: {
+                channels_list: [],
+                channel_id: null,
+                message: "",
+                message_list: [],
             }
         },
         methods: {
@@ -55,6 +61,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
 
 
             // main page
+
             search_pets: search_pets,
 
 
@@ -73,6 +80,12 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
 
             back_button_clicked: back_button_clicked,
             delete_button_clicked: delete_button_clicked,
+
+            // chat
+
+            send_message: send_message,
+            get_chat_channels: get_chat_channels,
+            get_messages_on_click: get_messages_on_click,
         }
     });
 
@@ -98,9 +111,10 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         app.on_post_pet_page = false;
         app.on_pet_page = true;
         app.pet.pet_idx = pet_idx;
-        
-        get_pet_owner(app.pet.pet_idx);
+
         get_pet_data(app.pet.pet_idx);
+        get_pet_owner(app.pet.pet_idx);
+        get_chat_channels();
     }
 
 
@@ -372,6 +386,54 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
     }
 
 
+    // MARK: Chat 
+
+    function get_chat_channels() {
+        $.getJSON(get_chat_channels_url, {
+            petID: app.pet.pet_idx,
+        }, function (data) {
+            app.chat.channel_id = data.channel_id;
+            app.chat.channels_list = data.channels_list;
+            get_messages();
+        });
+
+    }
+
+    function send_message() {
+        if (app.chat.message != "") {
+            console.log(app.chat.message);
+             $.post(add_message_url, {
+                channelID: app.chat.channel_id,
+                petID: app.pet.pet_idx,
+                messageContent: app.chat.message,
+             }, function (data) {
+                app.chat.message = "";
+
+             });
+        }
+    }
+
+    function get_messages() {
+        $.getJSON(get_messages_url, {
+            chatID: app.chat.channel_id,
+        }, function (data) {
+            app.chat.message_list = data.message_list;
+            console.log("asdf: " + app.chat.message_list);
+        });
+    }
+
+    function get_messages_on_click(chat_id) {
+        console.log("get messages on click");
+        if(chat_id != null) {
+            app.chat.channel_id = chat_id;
+            $.getJSON(get_messages_url, {
+                chatID: chat_id,
+            }, function (data) {
+                app.chat.message_list = data.message_list;
+            });
+        }
+    }
+
     // MARK: Helpers
 
     function clear_form_data(){
@@ -393,6 +455,15 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
         app.pet.image_url = null;
         app.pet.image_file = "";
         app.pet.pet_owner_phone_number = "";
+        app.pet.is_pet_owner = false;
+
+        // chat data
+        app.chat.channels_list = [];
+        app.chat.channel_id = null;
+        app.chat.message = "";
+        app.chat.message_list = [];
+
+        app.current_user = null;
     }
 
     function format_phone_number(phoneNumberString) {
@@ -406,15 +477,18 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
     }
 
     function get_current_user() {
+        app.current_user = null;
         $.getJSON(get_current_user_url, {
         }, function(data) {
             app.current_user = data.current_user;
+            console.log("our current user is: " + app.current_user);
         });   
     }
 
     function init_main() {
-        get_pets();
+        clear_form_data();
         get_current_user();
+        get_pets();
     }
 
     init_main();
