@@ -401,14 +401,13 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
 
     function send_message() {
         if (app.chat.message != "") {
-            console.log(app.chat.message);
              $.post(add_message_url, {
                 channelID: app.chat.channel_id,
                 petID: app.pet.pet_idx,
                 messageContent: app.chat.message,
              }, function (data) {
                 app.chat.message = "";
-
+                get_messages_on_click(data.channel_id);
              });
         }
     }
@@ -418,12 +417,10 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             chatID: app.chat.channel_id,
         }, function (data) {
             app.chat.message_list = data.message_list;
-            console.log("asdf: " + app.chat.message_list);
         });
     }
 
     function get_messages_on_click(chat_id) {
-        console.log("get messages on click");
         if(chat_id != null) {
             app.chat.channel_id = chat_id;
             $.getJSON(get_messages_url, {

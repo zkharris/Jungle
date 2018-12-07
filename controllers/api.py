@@ -99,13 +99,16 @@ def add_message():
 	
 	pet_owner_email = db((pet_id == db.pet.id)).select().first().pet_owner_email
 	chat_row = db((pet_id == db.chat.pet_post) & (db.chat.pet_requester_email == auth.user.email)).count()
+	chat_row_id = None
 
+	# if user is owner
 	if auth.user.email == pet_owner_email:
 		db.message.insert(
 			chat_id = channel_id,
 			message_sender_email = auth.user.email,
 			message_content = message_content
 		)
+		chat_row_id = channel_id
 	else:
 		# First message, chat row does not exist
 		if chat_row == 0:
@@ -131,28 +134,44 @@ def add_message():
 				message_sender_email = auth.user.email,
 				message_content = message_content
 			)
+	
+	return response.json(dict(channel_id=chat_row_id))
 
 @auth.requires_login()
 def get_chat_channels():
+	print("getting_chat_channels")
 	results = []
 	pet_id = int(request.vars.petID)
 	pet = db(pet_id == db.pet.id).select().first()
+	channel_id = 0
 
 	# if user is owner of post
-	if auth.user is not None:
-		if pet.pet_owner_email == auth.user.email:
-			channel_rows = db((pet_id == db.chat.pet_post)).select()
+	if pet.pet_owner_email == auth.user.email:
+		print("is an owner")
+		channel_rows = db((pet_id == db.chat.pet_post)).select()
+		for row in channel_rows:
+			results.append(dict(
+				id = row.id,
+				pet_requester_email = row.pet_requester_email
+			))
+		return response.json(dict(channels_list=results))
 
-			for row in channel_rows:
-				results.append(dict(
-					id = row.id,
-					pet_requester_email = row.pet_requester_email
-				))
-			print(results)
-
-			return response.json(dict(channels_list=results))
-
-	channel_id = db((pet_id == db.chat.pet_post) & (auth.user.email == db.chat.pet_requester_email)).select().first().id
+	# if user is not owner of post
+	else:
+		print("not an owner")
+		# if chat exists between user and owner
+		if db((pet_id == db.chat.pet_post) &
+				(auth.user.email == db.chat.pet_requester_email) &
+				(pet.pet_owner_email == db.chat.pet_owner_email)).count() > 0:
+			print("There is a chat")
+			channel_id = db((pet_id == db.chat.pet_post) &
+				(auth.user.email == db.chat.pet_requester_email) &
+				(pet.pet_owner_email == db.chat.pet_owner_email)).select().first().id
+		else:
+			print("There is not a chat")
+		# channel_id = db((pet_id == db.chat.pet_post) & (auth.user.email == db.chat.pet_requester_email)).select().first().id
+	
+	print("channel_id: ", channel_id)
 	return response.json(dict(channel_id=int(channel_id)))
 
 @auth.requires_login()
@@ -177,4 +196,3 @@ def get_messages():
 
 	return response.json(dict(message_list=results))
 
-	
