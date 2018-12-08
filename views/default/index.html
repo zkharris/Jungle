@@ -46,16 +46,26 @@
       <a href="/jungle/default/index" >
         <img src="{{=URL('static', 'images/favicon.png')}}" height="38px" width="38px">
       </a>
-      <v-toolbar-title>The Jungle</v-toolbar-title>
+      <v-toolbar-title>PetLend</v-toolbar-title>
+      
       <v-spacer></v-spacer>
       <v-text-field
-      hide-details
-      prepend-icon="search"
-      single-line
-      v-model="main.search_query"
-      v-on:keyup="search_pets"
+        id="toolbar_search_bar"
+        hide-details
+        prepend-icon="search"
+        single-line
+        v-model="main.search_query"
+        v-on:keyup="search_pets"
       ></v-text-field>
       <v-spacer></v-spacer>
+      <v-btn
+          id="toolbar_create_post"
+          v-on:click="post_pet_page();"
+          round
+          dark
+          outline
+          color="#FFFFFF"
+          >Create a post</v-btn>
       <!-- TODO: Fix capitilization here -->
       <!-- The href needs to match the name of the project thats hosted i.e. replace Jungle with <project-name> -->
       <v-btn 
