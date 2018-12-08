@@ -46,16 +46,26 @@
       <a href="/jungle/default/index" >
         <img src="{{=URL('static', 'images/favicon.png')}}" height="38px" width="38px">
       </a>
-      <v-toolbar-title>The Jungle</v-toolbar-title>
+      <v-toolbar-title>PetLend</v-toolbar-title>
+
       <v-spacer></v-spacer>
       <v-text-field
-      hide-details
-      prepend-icon="search"
-      single-line
-      v-model="main.search_query"
-      v-on:keyup="search_pets"
+        id="toolbar_search_bar"
+        hide-details
+        prepend-icon="search"
+        single-line
+        v-model="main.search_query"
+        v-on:keyup="search_pets"
       ></v-text-field>
       <v-spacer></v-spacer>
+      <v-btn
+          id="toolbar_create_post"
+          v-on:click="post_pet_page();"
+          round
+          dark
+          outline
+          color="#FFFFFF"
+          >Create a post</v-btn>
       <!-- TODO: Fix capitilization here -->
       <!-- The href needs to match the name of the project thats hosted i.e. replace Jungle with <project-name> -->
       <v-btn
@@ -80,30 +90,18 @@
           grid-list-md
         >
 
-        <!-- <v-layout row align-start>
-          <!-- TODO: Fix dropown menu
-          <v-flex xs2 sm2>
-            <v-select
-              :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
-              label="Sort by"
-              box
-            ></v-select>
-          </v-flex>
-
-          <v-flex xs2 sm2 >
-            <v-text-field
-              hide-details
-              placeholder="Tags..."
-              single-line
-              box
-            ></v-text-field>
-          </v-flex>
-       </v-layout> -->
-
        <v-layout row align-start>
           <v-flex xs4 sm4>
-            <h2 id="main_title_text"> Top posts </h2>
+            <h2 id="main_title_text"> Newest posts </h2>
           </v-flex>
+          <v-spacer></v-spacer>
+          <v-btn
+              id="main_feed_refresh"
+              v-on:click="main_feed_refresh_click();"
+              fab
+              dark
+              color="green"
+              ><v-icon dark>refresh</v-icon></v-btn>
         </v-layout>
 
           <v-layout row wrap>
@@ -234,15 +232,6 @@
             ></v-select> -->
         </div>
 
-        <div class="type_of_person">
-          <v-card-title>Seller or Lender</v-card-title>
-          <v-divider></v-divider>
-          <v-radio-group v-model="dialogm1" column>
-            <v-radio label="Seller" value="seller"></v-radio>
-            <v-radio label="Lender" value="lender"></v-radio>
-          </v-radio-group>
-        </div>
-
         <!-- price -->
         <div class="pet_price_input">
           <v-text-field
@@ -290,54 +279,88 @@
   <!-- MARK: Pet page -->
 
   <div v-if="on_pet_page" class="pet_page">
-    <div class="back_button_div">
-      <v-layout row>
-        <v-btn
-          id="back_button"
-          v-on:click="back_button_clicked();"
-          flat
-          dark
-          outline
-          right
-          color="#006400"
-        >Back</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          v-if="pet.is_pet_owner"
-          id="delete_button"
-          v-on:click="delete_button_clicked(pet.pet_idx);"
-          flat
-          dark
-          outline
-          right
-          color="#ff0000"
-        >Delete</v-btn>
-      </v-layout>
-    </div>
 
-    <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div>
+    <v-container fluid grid-list-md>
 
-    <div class="top_section">
-      <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+      <v-layout align-start justify-start row fill-height>
 
-      <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
-
-      <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
-
-    </div>
-
-    <div class="middle_section">
-      <img class="single_pet_image" :src="pet.pet_image_url"/>
-
-      <div class="chat_window">
-        <div class="chat_title">
-          <p class="chat_title">Chat</p>
-          <hr>
+      <!-- Pet section -->
+      <v-flex xs7 sm7 md7>
+        <div class="back_button_div">
+          <v-layout row>
+            <v-btn
+              id="back_button"
+              v-on:click="back_button_clicked();"
+              flat
+              dark
+              outline
+              right
+              color="#006400"
+            >Back</v-btn>
+            <v-spacer></v-spacer>
+          </v-layout>
         </div>
+
+        <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div>
+
+        <div class="top_section">
+          <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+
+          <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
+
+          <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
+        </div>
+
+        <div class="middle_section">
+          <img class="single_pet_image" :src="pet.pet_image_url"/>
+        </div>
+
+        <div class="contact_information">
+          <p class="contact_info_title">Contact Information</p>
+
+          <div class="phone_row">
+            <img class="phone_image" src="{{=URL('static', 'images/phone.png')}}" height="38px" width="38px">
+            <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+          </div>
+
+          <div class="email_row">
+            <img class="email_image" src="{{=URL('static', 'images/email.png')}}" height="38px" width="38px">
+            <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
+          </div>
+        </div>
+
+            <v-btn
+              v-if="pet.is_pet_owner"
+              id="delete_button"
+              v-on:click="delete_button_clicked(pet.pet_idx);"
+              flat
+              dark
+              outline
+              right
+              color="#ff0000"
+            >Delete</v-btn>
+
+      </v-flex>
+
+      <!-- Chat section -->
+
+      <v-flex xs4 sm4 md4>
+          <div class="chat_window">
+            <p class="chat_title">Messages</p>
+            <v-btn
+              id="chat_refresh"
+              v-on:click="chat_refresh_button_click();"
+              fab
+              dark
+              small
+              color="green"
+              ><v-icon dark>refresh</v-icon></v-btn>
+            <hr width="500px">
+          </div>
 
         <div v-if="pet.is_pet_owner" class="channels_list">
           <v-card class="channels_card"
-            width="525px"
+            width="500px"
           >
               <v-layout align-center justify-space-between row fill-height class="channels_container">
               <v-flex
@@ -360,10 +383,10 @@
           </v-card>
         </div>
 
-        <div>
+      <div>
         <v-card class="chat_card"
-          width="525px"
-          height="350px">
+          width="500px"
+          height="525px">
 
           <v-flex
               v-for="message in chat.message_list"
@@ -372,7 +395,8 @@
 
             <v-card class="message_card"
               width="97%"
-              height="100%">
+              height="100%"
+              color="#f0f5f5">
 
               <v-card-title>
                 <div>
@@ -380,72 +404,31 @@
                     <div class="message_card_email" v-bind:text-content.prop="message.message_sender_email"></div>
                     <div class="message_card_date" v-bind:text-content.prop="message.message_date"></div>
                   </div>
-
-
-
-                <div class="message_card_content" v-bind:text-content.prop="message.message_content"></div>
+                  <div class="message_card_content" v-bind:text-content.prop="message.message_content"></div>
               </div>
               </v-card-title>
             </v-card>
         </v-card>
       </div>
-
-          <div class="message_area">
-            <div class="message_input_box">
+        <div class="send_message_div">
               <v-text-field
                 v-model="chat.message"
                 placeholder="Send a message"
                 outline
                 append-icon="send"
                 @click:append="send_message();"
-              >
-
-              </v-text-field>
-            </div>
-          </div>
-
-      </div>
-    </div>
-
-    <div class="contact_information">
-        <p class="contact_info_title">Contact Information</p>
-
-        <!-- TODO: put a phone icon somewhere here, css for phone number -->
-        <div class="phone_row">
-          <img class="phone_image" src="{{=URL('static', 'images/phone.png')}}" height="38px" width="38px">
-          <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+                full-width
+              ></v-text-field>
+          </v-flex>
         </div>
 
-        <!-- TODO: put a mail icon somewhere here, css for email -->
-        <div class="email_row">
-          <img class="email_image" src="{{=URL('static', 'images/email.png')}}" height="38px" width="38px">
-          <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
-        </div>
+    </v-flex>
 
-        <p class="contact_info_title"> SHARE</p>
+    </v-layout>
 
-        <a href="https://twitter.com/share"
-           class="twitter-share-button"
-           data-url="https://pet-lend.herokuapp.com/PetLend/default/index">
-           <img src="{{=URL('static', 'images/twitter.png')}}">
-        </a>
+    </v-container>
 
-         <a target="_blank"
-            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
-            class="fb_share_button">
-            <img src="{{=URL('static', 'images/facebook.png')}}">
-        </a>
-
-      </div>
-    </div>
-
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-    <!-- Place this tag where you want the share button to render. -->
-    <div class="g-plus" data-action="share" data-height="24" data-href="https://pet-lend.herokuapp.com/PetLend/default/index"> Share</div>
-
+    </div>  <!-- Pet page -->
 
   </div>
 

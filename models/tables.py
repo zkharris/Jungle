@@ -13,7 +13,7 @@ def get_formatted_date():
 
 def get_message_formatted_date():
     date = datetime.datetime.now()
-    formattedDate = date.strftime("%B %d, %-H:%M%p")
+    formattedDate = date.strftime("%B %d, %I:%M%p")
     return formattedDate
 
 
@@ -49,6 +49,3 @@ db.define_table('message',
                 Field('message_utc_date', default=get_current_time()),
                 Field('message_date', default=get_message_formatted_date())
                 )
-
-
-
