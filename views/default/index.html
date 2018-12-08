@@ -281,50 +281,74 @@
   <!-- MARK: Pet page -->
 
   <div v-if="on_pet_page" class="pet_page">
-    <div class="back_button_div">
-      <v-layout row>
-        <v-btn 
-          id="back_button"
-          v-on:click="back_button_clicked();"
-          flat
-          dark
-          outline
-          right
-          color="#006400"
-        >Back</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          v-if="pet.is_pet_owner"
-          id="delete_button"
-          v-on:click="delete_button_clicked(pet.pet_idx);"
-          flat
-          dark
-          outline
-          right
-          color="#ff0000"
-        >Delete</v-btn>
-      </v-layout>
-    </div>
 
-    <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div> 
+    <v-container fluid grid-list-md>
 
-    <div class="top_section">
-      <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+      <v-layout align-start justify-start row fill-height>
 
-      <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
-
-      <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
-
-    </div>
-
-    <div class="middle_section">
-      <img class="single_pet_image" :src="pet.pet_image_url"/>
-
-      <div class="chat_window">
-        <div class="chat_title">
-          <p class="chat_title">Chat</p>
-          <hr>
+      <v-flex xs7 sm7 md7>
+        <div class="back_button_div">
+          <v-layout row>
+            <v-btn 
+              id="back_button"
+              v-on:click="back_button_clicked();"
+              flat
+              dark
+              outline
+              right
+              color="#006400"
+            >Back</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              v-if="pet.is_pet_owner"
+              id="delete_button"
+              v-on:click="delete_button_clicked(pet.pet_idx);"
+              flat
+              dark
+              outline
+              right
+              color="#ff0000"
+            >Delete</v-btn>
+          </v-layout>
         </div>
+
+        <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div> 
+
+        <div class="top_section">
+          <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+
+          <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
+
+          <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
+        </div>
+
+        <div class="middle_section">
+          <img class="single_pet_image" :src="pet.pet_image_url"/>
+        </div>
+
+        <div class="contact_information">
+          <p class="contact_info_title">Contact Information</p>
+
+          <div class="phone_row">
+            <img class="phone_image" src="{{=URL('static', 'images/phone.png')}}" height="38px" width="38px">
+            <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
+          </div>
+
+          <div class="email_row">
+            <img class="email_image" src="{{=URL('static', 'images/email.png')}}" height="38px" width="38px">
+            <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
+          </div>
+        </div>
+
+      </v-flex>
+
+
+      <v-flex xs4 sm4 md4>
+          <div class="chat_window">
+            <div class="chat_title">
+            <p class="chat_title">Chat</p>
+            <hr>
+          </div>
 
         <div v-if="pet.is_pet_owner" class="channels_list">
           <v-card class="channels_card"
@@ -354,7 +378,7 @@
         <div>
         <v-card class="chat_card"
           width="525px"
-          height="350px">
+          height="525px">
 
           <v-flex
               v-for="message in chat.message_list"
@@ -380,7 +404,6 @@
             </v-card>
         </v-card>
       </div>
-
           <div class="message_area">
             <div class="message_input_box">
               <v-text-field
@@ -389,34 +412,19 @@
                 outline
                 append-icon="send"
                 @click:append="send_message();"
-              >
-
-              </v-text-field>
+              ></v-text-field>
             </div>
           </div>
-
       </div>
     </div>
 
-    <div class="contact_information">
-        <p class="contact_info_title">Contact Information</p>
+    </v-flex>
 
-        <!-- TODO: put a phone icon somewhere here, css for phone number -->
-        <div class="phone_row">
-          <img class="phone_image" src="{{=URL('static', 'images/phone.png')}}" height="38px" width="38px">
-          <div class="single_pet_phone_number" v-bind:text-content.prop="pet.pet_owner_phone_number"></div>
-        </div>
+    </v-layout>
 
-        <!-- TODO: put a mail icon somewhere here, css for email -->
-        <div class="email_row">
-          <img class="email_image" src="{{=URL('static', 'images/email.png')}}" height="38px" width="38px">
-          <div class="single_pet_email" v-bind:text-content.prop="pet.pet_owner_email"></div>
-        </div>
+    </v-container>
 
-      </div>
-    </div>
-
-    
+    </div>  <!-- Pet page -->
 
   </div>
 
