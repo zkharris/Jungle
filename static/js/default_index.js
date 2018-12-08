@@ -63,6 +63,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             // main page
 
             search_pets: search_pets,
+            main_feed_refresh_click: main_feed_refresh_click,
 
 
             // post pet page
@@ -86,6 +87,7 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             send_message: send_message,
             get_chat_channels: get_chat_channels,
             get_messages_on_click: get_messages_on_click,
+            chat_refresh_button_click: chat_refresh_button_click, 
         }
     });
 
@@ -168,6 +170,11 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
                 process_pets();
             });
         }
+    }
+
+    function main_feed_refresh_click() {
+        console.log("Main feed refresh clicked");
+        get_pets();
     }
 
     
@@ -425,6 +432,17 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             app.chat.channel_id = chat_id;
             $.getJSON(get_messages_url, {
                 chatID: chat_id,
+            }, function (data) {
+                app.chat.message_list = data.message_list;
+            });
+        }
+    }
+
+    function chat_refresh_button_click() {
+        console.log("😃" + app.chat.channel_id);
+        if (app.chat.channel_id != null && app.chat.channel_id > 0) {
+            $.getJSON(get_messages_url, {
+                chatID: app.chat.channel_id,
             }, function (data) {
                 app.chat.message_list = data.message_list;
             });

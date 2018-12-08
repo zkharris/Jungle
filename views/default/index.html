@@ -47,7 +47,7 @@
         <img src="{{=URL('static', 'images/favicon.png')}}" height="38px" width="38px">
       </a>
       <v-toolbar-title>PetLend</v-toolbar-title>
-
+      
       <v-spacer></v-spacer>
       <v-text-field
         id="toolbar_search_bar"
@@ -68,7 +68,7 @@
           >Create a post</v-btn>
       <!-- TODO: Fix capitilization here -->
       <!-- The href needs to match the name of the project thats hosted i.e. replace Jungle with <project-name> -->
-      <v-btn
+      <v-btn 
         href="/Jungle/default/user"
         v-bind:text-content.prop="current_user ? current_user : 'login'"
         round
@@ -111,7 +111,7 @@
               :key="pet.title"
             >
             <div class="pet_card">
-              <v-card
+              <v-card 
                 v-on:click="pet_page(pet.id)"
                 >
                 <v-img
@@ -222,8 +222,8 @@
             label="What kind of pet are they? (e.g. Dog, Cat)"
           ></v-text-field>
           <!-- Could not get this to work -->
-            <!-- <v-select
-            v-model="post_pet.pet_type"
+            <!-- <v-select 
+            v-model="post_pet.pet_type" 
             :items="items"
             item-text="items.text"
             box
@@ -288,7 +288,7 @@
       <v-flex xs7 sm7 md7>
         <div class="back_button_div">
           <v-layout row>
-            <v-btn
+            <v-btn 
               id="back_button"
               v-on:click="back_button_clicked();"
               flat
@@ -301,7 +301,7 @@
           </v-layout>
         </div>
 
-        <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div>
+        <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div> 
 
         <div class="top_section">
           <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
@@ -354,7 +354,7 @@
               dark
               small
               color="green"
-              ><v-icon dark>refresh</v-icon></v-btn>
+              ><v-icon dark>refresh</v-icon></v-btn>         
             <hr width="500px">
           </div>
 
@@ -412,7 +412,7 @@
       </div>
         <div class="send_message_div">
               <v-text-field
-                v-model="chat.message"
+                v-model="chat.message" 
                 placeholder="Send a message"
                 outline
                 append-icon="send"

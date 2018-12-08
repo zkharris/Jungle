@@ -12,6 +12,10 @@
 	margin-bottom: 12px;
 }
 
+#main_feed_refresh {
+	margin-bottom: 15px;
+}
+
 .pet_card {
 	margin-bottom: 20px;
 	margin-left: 15px;
@@ -38,9 +42,6 @@
 	max-height: 100%;
 	max-width: 100%;
 	padding-bottom: 8px;
-}
-
-.back_button_div {
 }
 
 .back_button_text {
@@ -84,7 +85,6 @@
 }
 
 .contact_information {
-	padding-left: 0px;
 	vertical-align: top;
 }
 
@@ -149,11 +149,11 @@
 
 .chat_title {
 	font-family: "Verdana", "Times New Roman", Times, serif;
-	font-size: 125%;
+	font-size: 135%;
 	display: inline-block;
 }
 
-.refresh_button {
+.chat_refresh {
 	display: inline-block;
 }
 
