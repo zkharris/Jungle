@@ -286,6 +286,7 @@
 
       <v-layout align-start justify-start row fill-height>
 
+      <!-- Pet section -->
       <v-flex xs7 sm7 md7>
         <div class="back_button_div">
           <v-layout row>
@@ -299,16 +300,6 @@
               color="#006400"
             >Back</v-btn>
             <v-spacer></v-spacer>
-            <v-btn
-              v-if="pet.is_pet_owner"
-              id="delete_button"
-              v-on:click="delete_button_clicked(pet.pet_idx);"
-              flat
-              dark
-              outline
-              right
-              color="#ff0000"
-            >Delete</v-btn>
           </v-layout>
         </div>
 
@@ -340,19 +331,32 @@
           </div>
         </div>
 
+            <v-btn
+              v-if="pet.is_pet_owner"
+              id="delete_button"
+              v-on:click="delete_button_clicked(pet.pet_idx);"
+              flat
+              dark
+              outline
+              right
+              color="#ff0000"
+            >Delete</v-btn>
+
       </v-flex>
 
+      <!-- Chat section -->
 
       <v-flex xs4 sm4 md4>
           <div class="chat_window">
             <div class="chat_title">
-            <p class="chat_title">Chat</p>
-            <hr>
+              <p class="chat_title">Chat</p>
+            </div>             
+            <hr width="500px">
           </div>
 
         <div v-if="pet.is_pet_owner" class="channels_list">
           <v-card class="channels_card"
-            width="525px"
+            width="500px"
           >
               <v-layout align-center justify-space-between row fill-height class="channels_container">
               <v-flex
@@ -375,9 +379,9 @@
           </v-card>
         </div>
 
-        <div>
+      <div>
         <v-card class="chat_card"
-          width="525px"
+          width="500px"
           height="525px">
 
           <v-flex
@@ -387,7 +391,8 @@
 
             <v-card class="message_card"
               width="97%"
-              height="100%">
+              height="100%"
+              color="#f0f5f5">
 
               <v-card-title>
                 <div>
@@ -395,28 +400,23 @@
                     <div class="message_card_email" v-bind:text-content.prop="message.message_sender_email"></div>
                     <div class="message_card_date" v-bind:text-content.prop="message.message_date"></div>
                   </div>
-
-
-
-                <div class="message_card_content" v-bind:text-content.prop="message.message_content"></div>
+                  <div class="message_card_content" v-bind:text-content.prop="message.message_content"></div>
               </div>
               </v-card-title>
             </v-card>
         </v-card>
       </div>
-          <div class="message_area">
-            <div class="message_input_box">
+        <div class="send_message_div">
               <v-text-field
                 v-model="chat.message" 
                 placeholder="Send a message"
                 outline
                 append-icon="send"
                 @click:append="send_message();"
+                full-width
               ></v-text-field>
-            </div>
-          </div>
-      </div>
-    </div>
+          </v-flex>
+        </div>
 
     </v-flex>
 
