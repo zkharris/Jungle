@@ -80,30 +80,18 @@
           grid-list-md
         >
 
-        <!-- <v-layout row align-start>
-          <!-- TODO: Fix dropown menu 
-          <v-flex xs2 sm2>
-            <v-select
-              :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
-              label="Sort by"
-              box
-            ></v-select>
-          </v-flex>
-
-          <v-flex xs2 sm2 >
-            <v-text-field 
-              hide-details
-              placeholder="Tags..."
-              single-line
-              box
-            ></v-text-field>
-          </v-flex>
-       </v-layout> -->
-
        <v-layout row align-start>
           <v-flex xs4 sm4>
-            <h2 id="main_title_text"> Top posts </h2>
+            <h2 id="main_title_text"> Newest posts </h2>
           </v-flex>
+          <v-spacer></v-spacer>
+          <v-btn
+              id="main_feed_refresh"
+              v-on:click="main_feed_refresh_click();"
+              fab
+              dark
+              color="green"
+              ><v-icon dark>refresh</v-icon></v-btn>
         </v-layout>
 
           <v-layout row wrap>
@@ -348,9 +336,15 @@
 
       <v-flex xs4 sm4 md4>
           <div class="chat_window">
-            <div class="chat_title">
-              <p class="chat_title">Chat</p>
-            </div>             
+            <p class="chat_title">Messages</p>
+            <v-btn
+              id="chat_refresh"
+              v-on:click="chat_refresh_button_click();"
+              fab
+              dark
+              small
+              color="green"
+              ><v-icon dark>refresh</v-icon></v-btn>         
             <hr width="500px">
           </div>
 
