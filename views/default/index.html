@@ -48,8 +48,6 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
 
-
-
 <div id="app">
 
     <v-toolbar dark tabs flat color="light green">
@@ -345,17 +343,16 @@
           </div>
         </div>
 
-        <p class="contact_info_title"> Share</p>
-
         <a href="https://twitter.com/share"
            class="twitter-share-button"
            data-url="https://pet-lend.herokuapp.com/PetLend/default/index">
-           <img src="{{=URL('static', 'images/twitter.png')}}">
+           <img src="{{=URL('static', 'images/twitter-box.png')}}">
         </a>
 
-        <div class="fb-share-button" data-href="https://pet-lend.herokuapp.com/PetLend/default/index" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="{{=URL('static', 'images/facebook.png')}}"></a></div>
+        <div class="fb-share-button" data-href="https://pet-lend.herokuapp.com/PetLend/default/index" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="{{=URL('static', 'images/facebook-box.png')}}"></a></div>
 
-            <v-btn
+        <div>
+          <v-btn
               v-if="pet.is_pet_owner"
               id="delete_button"
               v-on:click="delete_button_clicked(pet.pet_idx);"
@@ -365,6 +362,7 @@
               right
               color="#ff0000"
             >Delete</v-btn>
+          </div>
 
       </v-flex>
 
@@ -396,7 +394,7 @@
                 <v-card class="channel_card"
                   width="97%"
                   height="100%"
-                  color="#A9A9A9"
+                  color="#d2d2d2"
                   v-on:click="get_messages_on_click(channel.id);"
                 >
                   <v-card-title>
@@ -422,7 +420,7 @@
             <v-card class="message_card"
               width="97%"
               height="100%"
-              color="#f0f5f5">
+              color="#f1f1f1">
 
               <v-card-title>
                 <div>
