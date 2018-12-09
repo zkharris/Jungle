@@ -2,6 +2,10 @@
 	padding-bottom: 8px;
 }
 
+.upload_image_title, .radios_prompt {
+	font-size: 115%;
+}
+
 #pet_list {
 	margin-left: 50px;
 	margin-right: 50px;
@@ -44,12 +48,19 @@
 	padding-bottom: 8px;
 }
 
+.back_button_div {
+	font-family: "comic-sans", Times, serif;
+	text-transform: none !important;
+	margin-bottom: 15px;
+
+}
+
 .back_button_text {
 	font-family: "comic-sans", Times, serif;
 }
 
 .single_pet_title {
-	padding-left: 0px;
+	padding-top: 5px;
 	padding-bottom: 15px;
 	font-weight: 900;
 	font-size: 175%;
@@ -66,12 +77,11 @@
 	border: 1px solid green;
 }
 
-.single_pet_date, .twitter-share-button, .fb-share-button {
-	padding-left: 0px;
-	padding-top: 20px;
-	padding-bottom: 15px;
+.single_pet_date {
+	margin-top: 20px
+	padding-bottom: 20px;
 	font-family: "Verdana", "Times New Roman", Times, serif;
-	display: inline-block;
+	font-size: 135%;
 }
 
 .single_pet_image {
@@ -98,7 +108,7 @@
 .single_pet_description {
 	padding-left: 30px;
 	padding-right: 15px;
-	padding-top: 15px;
+	padding-top: 5px;
 	font-size: 125%;
 	font-family: "Verdana", "Times New Roman", Times, serif;
 }
@@ -204,13 +214,14 @@
 }
 
 .twitter-share-button {
-	margin-top: 15px;
+	margin-top: 3px;
 	margin-bottom: 15px;
 	margin-right: 5px;
 	display: inline-block;
 }
 
 .fb-share-button {
-	margin-top: 15px;
+	margin-top: 3px;
+	margin-right: 5px;
 	display: inline-block;
 }

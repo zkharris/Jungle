@@ -324,11 +324,6 @@ var default_image_url = "https://i.pinimg.com/236x/47/41/19/474119c32836b1ace813
             app.post_pet.errors.push("Post title required");
         }
 
-        if (!app.post_pet.pet_type) {
-            console.log("yap");
-            app.post_pet.errors.push("Pet type required");
-        }
-
         if (!app.post_pet.pet_price) {
             console.log("yop");
             app.post_pet.errors.push("Pet price required");

@@ -223,7 +223,7 @@
           maxlength="700"
           ></v-textarea>
         </div>
-        <p> Are you a Pet Sitter or a Pet Lender </p>
+        <p class="radios_prompt"> Are you a Pet Sitter or a Pet Lender? </p>
           <v-radio-group v-model="radios" :mandatory="false">
             <v-radio label="Sitter" value="radio-1"></v-radio>
             <v-radio label="Lender" value="radio-2"></v-radio>
@@ -233,7 +233,8 @@
         <div class="pet_type">
           <v-text-field
             v-model="post_pet.pet_type"
-            label="What kind of pet are they? (e.g. Dog, Cat)"
+            color="green"
+            label="If you are lending a pet what type of pet are they? (e.g. Dog, Cat)"
           ></v-text-field>
           <!-- Could not get this to work -->
             <!-- <v-select
@@ -315,7 +316,25 @@
           </v-layout>
         </div>
 
-        <div class="single_pet_date" v-bind:text-content.prop="pet.pet_date">Posted </div>
+        <div class="single_pet_date">
+          <div v-bind:text-content.prop="pet.pet_date"></div>
+        </div>
+
+        <div class="top_section">
+          <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
+
+          <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
+
+          <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
+
+
+        </div>
+
+        <div class="middle_section">
+          <img class="single_pet_image" :src="pet.pet_image_url"/>
+        </div>
+
+        <div>
         <a href="https://twitter.com/share"
            class="twitter-share-button"
            data-url="https://pet-lend.herokuapp.com/PetLend/default/index">
@@ -324,19 +343,8 @@
 
         <div class="fb-share-button" data-href="https://pet-lend.herokuapp.com/PetLend/default/index" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><img src="{{=URL('static', 'images/facebook-box.png')}}"></a></div>
 
-        <a class="google-plus-button"> <img src="{{=URL('static', 'images/google-plus.png')}}"></a>
-
-        <div class="top_section">
-          <div class="single_pet_title" v-bind:text-content.prop="pet.pet_title"></div>
-
-          <div class="single_pet_price" v-bind:text-content.prop="pet.pet_price"></div>
-
-          <div class="single_pet_description" v-bind:text-content.prop="pet.pet_description"></div>
-        </div>
-
-        <div class="middle_section">
-          <img class="single_pet_image" :src="pet.pet_image_url"/>
-        </div>
+        <a class="google-plus-button"> <img src="{{=URL('static', 'images/google-plus-box.png')}}"></a>
+      </div>
 
         <div class="contact_information">
           <p class="contact_info_title">Contact Information</p>
@@ -413,7 +421,7 @@
       <div>
         <v-card class="chat_card"
           width="500px"
-          height="525px">
+          height="550px">
 
           <v-flex
               v-for="message in chat.message_list"
