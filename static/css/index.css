@@ -66,7 +66,7 @@
 	border: 1px solid green;
 }
 
-.single_pet_date {
+.single_pet_date, .twitter-share-button, .fb-share-button {
 	padding-left: 0px;
 	padding-top: 20px;
 	padding-bottom: 15px;
